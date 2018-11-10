@@ -1,5 +1,5 @@
 
-"""This test class tests the parcel_views."""
+"""This test class tests the user views. It tests most of the fucntionality in the User Views. """
 from ... import create_app
 import unittest
 import json
