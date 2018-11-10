@@ -8,7 +8,7 @@ class Parcel(object):
     parcels = []
 
     def create_order(self, destination, recipient, sender, weight):
-        """Create parcel order."""
+        """Create parcel order. It stores data in a data list"""
         self.destination = destination
         self.recipient = recipient
         self.sender = sender
@@ -27,7 +27,7 @@ class Parcel(object):
         Parcel.parcels.append(payload)
 
     def get_all(self):
-        """Create users."""
+        """This method returns all parcels in the system."""
         return Parcel.parcels
 
     def get_one_parcel(self, id):

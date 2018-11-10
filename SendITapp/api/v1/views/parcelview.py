@@ -7,7 +7,7 @@ class AllParcels(Resource):
     """Class to handle parcel views."""
 
     def get(self):
-        """Method to get all the parcels."""
+        """Method to get all the parcels available in the system."""
         par1 = Parcel()
         all_parcels = par1.get_all()
 
@@ -20,7 +20,7 @@ class AllParcels(Resource):
         return answ
 
     def post(self):
-        """Method to create a parcel order."""
+        """Method to create a parcel order. It uses the POST method"""
         data = request.get_json() or {}
 
         par1 = Parcel()
