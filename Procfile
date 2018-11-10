@@ -1,1 +1,1 @@
-web: gunicorn SendITAPI.SendITapp
+web: gunicorn SendITapp:create_app()
