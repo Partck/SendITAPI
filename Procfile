@@ -1,1 +1,1 @@
-web: gunicorn SendITapp:create_app()
+web: gunicorn 'SendITapp:create_app()'
