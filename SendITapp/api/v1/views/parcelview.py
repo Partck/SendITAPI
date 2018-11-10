@@ -79,7 +79,9 @@ class ParcelsByUser(Resource):
 
 
 class CancelParcelOrder(Resource):
+    """This class handles cancel order requests."""
     def put(self, parcelid):
+        """This method uses the PUT method to cancel a request."""
         parcelid = str(parcelid)
         for item in Parcel.parcels:
             if item['id'] == parcelid:
