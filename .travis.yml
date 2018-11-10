@@ -1,16 +1,15 @@
 language: python
 python:
-  - "3.3"
+ - "3.6"
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
-  - pip install coveralls
+ - pip install -r requirements.txt
+ - pip install coveralls
 before_script:
-  - export PYTHONPATH=`pwd`
+ - export PYTHONPATH=`pwd`
 # command to run tests
 script: 
-
-  - nosetests --with-coverage --cover-package=SendITapp
+ - nosetests --with-coverage
 after_success:
-  - coverallslanguage: python
-- coveralls
+ - coverallslanguage: python
+ - coveralls
