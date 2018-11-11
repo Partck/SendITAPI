@@ -2,18 +2,3 @@ service_name: travis-pro
 repo_token: sER1QWTlhQzO3wATzq36rHAwQfjdMq70X
 
 parallel: true # if the CI is running your build in parallel
-
-[run]
- omit =
- env/*
- requirements.txt
- run.py
- .pytest_cache/*
- __pycache__/*
- .gitignore
- .travis.yml
- README.md
- Procfile
- runtime.txt
- instance/*
-

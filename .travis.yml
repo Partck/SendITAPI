@@ -12,7 +12,7 @@ before_script:
  - export PYTHONPATH=`pwd`
 # command to run tests
 script: 
- - nosetests --with-coverage
+ - pytest --cov=SendITapp
 after_success:
  - coverallslanguage: python
  - coveralls
