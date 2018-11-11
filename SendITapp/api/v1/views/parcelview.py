@@ -22,13 +22,43 @@ class AllParcels(Resource):
     def post(self):
         """Method to create a parcel order. It uses the POST method"""
         data = request.get_json() or {}
+        for key in data.keys():
+
+            """Check email validation."""
+            if key == 'sender' :
+                if data['sender'] == "":
+                    message = 'Please confirm the sender'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+
+            if key == 'destination' or key =='recipient':
+                if data['destination'] == "" or data['recipient'] == "":
+                    message = 'Check your details. Destination, Recipient...'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+
+            if key == 'price' or key == 'weight':
+                if data['price'] == "" or data['weight'] == "":
+                    message = 'Kindly confirm the wight and pricing of your package'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
 
         par1 = Parcel()
-        par1.create_order(
-            data["destination"], data["recipient"], data["sender"],
-            data["weight"])
+        par1.create_parcel(data["destination"], data["recipient"], data["sender"],
+        data["weight"], data["price"])
 
-        payload = {"Status": "OK"}
+        created_parcel = data["destination"], data["recipient"], data["sender"],\
+                        data["weight"], data["price"]
+
+        
+
+        payload = {"Status": "OK", "Parcel": created_parcel}
         answ = make_response(jsonify(payload), 200)
         answ.content_type = 'application/json;charset=utf-8'
         return answ

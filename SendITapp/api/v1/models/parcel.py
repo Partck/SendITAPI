@@ -1,5 +1,5 @@
 """Import unique identifier library. Used to generate my Ids."""
-import uuid
+# import uuid
 
 
 class Parcel(object):
@@ -7,12 +7,13 @@ class Parcel(object):
 
     parcels = []
 
-    def create_order(self, destination, recipient, sender, weight):
-        """Create parcel order. It stores data in a data list"""
+    def create_parcel(self, destination, recipient, sender, weight, price):
+        """Create parcel order. It stores data in a data list."""
         self.destination = destination
         self.recipient = recipient
         self.sender = sender
         self.weight = weight
+        self.price = price
 
         # id1 = str(uuid.uuid4().int)
         id1 = "1"
@@ -22,9 +23,10 @@ class Parcel(object):
 
         payload = {"id": str(id1), "destination": self.destination,
         "recipient": self.recipient, "sender": self.sender,
-        "weight": self.weight, "userid": userid, "status": status}
+        "weight": self.weight, "userid": userid, "status": status, "price": self.price}
 
         Parcel.parcels.append(payload)
+        return True
 
     def get_all(self):
         """This method returns all parcels in the system."""

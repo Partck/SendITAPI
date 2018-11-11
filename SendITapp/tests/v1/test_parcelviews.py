@@ -12,11 +12,12 @@ class TestParcelViews(unittest.TestCase):
         create_app().testing = True
         self.app = create_app().test_client()
         self.data = {
-            "destination": "destination",
-            "recipient": "recipient",
-            "sender": "sender",
-            "weight": "weight"
-        }
+                        "destination": "destination",
+                        "recipient": "recipient",
+                        "sender": "sender",
+                        "weight": "weight",
+                        "price": "price"
+                        }
 
     def test_create_parcel_order(self):
         """ Test create a new parcel order. """

@@ -10,17 +10,63 @@ class User(Resource):
         """Create user."""
         data = request.get_json() or {}
         user = UserModel()
+
+        for key in data.keys():
+            #Check email validation
+            if key == 'username' or key =='name':
+                if data['username'] == "" or data['name'] == "":
+                    message = 'Check your name and usename'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+
+
+            if key == 'email':
+                if data[key].find("@") < 2:
+                    message = 'Incorrect email format'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+
+            if key == 'password':
+                if data['password'] == "" or data['password'] != data["retype_password"]:
+                    message = 'Check your password.'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+
+            if key == 'role':
+                if data['role'] != "Admin" and data["role"] != "User":
+                    message = 'Role input can either be Admin or User'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+
+
+
         reply_info = user.create_user(data["username"], data["name"],
          data["email"], data["role"], data["phone"], data["password"])
 
-        user_data = [data["username"], data["name"],
-         data["email"], data["role"], data["phone"], data["password"]]
+        if reply_info == True:
+            user_data = [data["username"], data["name"],
+            data["email"], data["role"], data["phone"], data["password"]]
 
-        payload = {"Status": "created",
-        "User": user_data}
-        answ = make_response(jsonify(payload), 200)
+            payload = {"Status": "created",
+            "User": user_data}
+            answ = make_response(jsonify(payload), 200)
+            answ.content_type = 'application/json;charset=utf-8'
+            return answ
+
+        payload = {"Status": "Failed", "Message": reply_info}
+        answ = make_response(jsonify(payload), 400)
         answ.content_type = 'application/json;charset=utf-8'
         return answ
+
+        
 
 
     def get(self):
