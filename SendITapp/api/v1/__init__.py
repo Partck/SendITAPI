@@ -1,6 +1,7 @@
 """From flask import Blueprint. Name it : api_v1."""
 from flask import Blueprint
-from SendITapp.api.v1.views.parcelview import AllParcels, SingleParcel, ParcelsByUser, CancelParcelOrder
+from SendITapp.api.v1.views.parcelview import AllParcels, SingleParcel,\
+    ParcelsByUser, CancelParcelOrder, UpdateOrder
 from flask_restful import Api
 from SendITapp.api.v1.views.userView import User, SingleUser
 
@@ -14,3 +15,4 @@ blueprint_api.add_resource(User, "/users")
 blueprint_api.add_resource(SingleUser, "/users/<userid>")
 blueprint_api.add_resource(ParcelsByUser, "/users/<userid>/parcels")
 blueprint_api.add_resource(CancelParcelOrder, "/parcels/<parcelid>/cancel")
+blueprint_api.add_resource(UpdateOrder, "/parcels/<parcelid>/update")
