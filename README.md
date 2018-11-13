@@ -1,8 +1,8 @@
 #By Partck 2018
 # SendITAPI
-[![Coverage Status](https://coveralls.io/repos/github/Partck/SendITAPI/badge.svg?branch=develop)](https://coveralls.io/github/Partck/SendITAPI?branch=develop)
 [![Build Status](https://travis-ci.org/Partck/SendITAPI.svg?branch=develop)](https://travis-ci.org/Partck/SendITAPI)
 
+[![Coverage Status](https://coveralls.io/repos/github/Partck/SendITAPI/badge.svg?branch=develop)](https://coveralls.io/github/Partck/SendITAPI?branch=develop)
 
 SendIT API
 
