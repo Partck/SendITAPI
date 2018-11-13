@@ -1,1 +1,0 @@
-web: gunicorn 'SendITapp:create_app()'
