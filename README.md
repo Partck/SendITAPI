@@ -1,4 +1,4 @@
-#By Partck
+#By Partck 2018
 # SendITAPI
 [![Coverage Status](https://coveralls.io/repos/github/Partck/SendITAPI/badge.svg?branch=test_setup)](https://coveralls.io/github/Partck/SendITAPI?branch=test_setup)
 
