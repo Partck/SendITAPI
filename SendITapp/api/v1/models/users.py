@@ -1,5 +1,5 @@
 """Unique identifier library."""
-# import uuid
+import uuid
 
 
 class UserModel(object):
@@ -30,8 +30,8 @@ class UserModel(object):
                 message = 'This phone number is in use'
                 return message
 
-        # id1 = str(uuid.uuid4().int)
-        id1 = "4"
+        id1 = str(uuid.uuid4().int)
+
         payload = {"userid": str(id1), "username": self.username,
                    "name": self.name, "email": self.email, "role": self.role,
                    "phone": self.phone, "password": self.password}

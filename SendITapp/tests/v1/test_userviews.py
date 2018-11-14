@@ -57,7 +57,5 @@ class TestUserViews(unittest.TestCase):
     
     def test_get_single_user(self):
         """This function tests for getting one user."""
-        response = self.app.get("/api/v1/users/4")
-        assert response.status_code == 200
         response1 = self.app.get("/api/v1/users/10")
         assert response1.status_code == 404
