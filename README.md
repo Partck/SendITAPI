@@ -2,58 +2,59 @@
 
 [![Build Status](https://travis-ci.org/Partck/SendITAPI.svg?branch=develop)](https://travis-ci.org/Partck/SendITAPI) [![Coverage Status](https://coveralls.io/repos/github/Partck/SendITAPI/badge.svg?branch=develop)](https://coveralls.io/github/Partck/SendITAPI?branch=develop)
 
-**SendIT** is a service that helps users track the parcel delivery orders.
+ **SendIT** is a service that helps users track the parcel delivery orders
 
 ## How it Works:
     An user register into the system.
     A user can add a parcel delivery order
     A user can view a single delivery order
     A user can cancel a delivery order
-    Admin can fetch all delivery orders in the system
+    An Admin can fetch all delivery orders in the system
     A user can see their details
     A user can see all orders attached to a specific user
 
 ## Prerequisite
-    `Python3.6`
-    `A Virtual Environment`
+    Python3.6
+    A Virtual Environment
 
 ## Installation and Setup
-Clone the repository below: `https://github.com/Partck/SendITAPI.git`
-Create and activate a virtual environment
-    `virtualenv env --python=python3.6`
-    `source env/bin/activate`
+ Clone this repository: (https://github.com/Partck/SendITAPI.git)
 
-Install required Dependencies
-    `pip install -r requirements.txt`
+    Create and activate a virtual environment
+            virtualenv env --python=python3.6
+            source env/bin/activate
 
-Export flask file and run
-    `export FLASK_APP=run.py`
-    `flask run`
+    Install required Dependencies
+        pip install -r requirements.txt
 
-URL FORMAT: `HOST/api/v1/endpoint`
-    `For example: http://127.0.0.1:5000/api/v1/parcels`
+    Export flask file and run
+        export FLASK_APP=run.py
+        flask run
 
-The `/SendITapp` has the following endpoints:
+ URL FORMAT: `HOST/api/v1/endpoint`
+     For example: (http://127.0.0.1:5000/api/v1/parcels)
+
+ The `/SendITapp` has the following endpoints:
 
 ## Endpoints:
-    - Create an account : `api/v1/users`
-    - Create a parcel delivery order : `api/v1/parcels`
-    - Fetch all parcel delivery orders  : `api/v1/parcels`
-    - Fetch a specific parcel delivery order  : `api/v1/parcels/<parcel_id>`
-    - Fetch all parcel delivery orders by a specific user  : `api/v1/users/<user_id>/parcels`
-    - Cancel a specific parcel delivery order : `api/v1/parcels/<parcel_id>/cancel`
+    - Create an account : api/v1/users
+    - Create a parcel delivery order : api/v1/parcels
+    - Fetch all parcel delivery orders  : api/v1/parcels
+    - Fetch a specific parcel delivery order  : api/v1/parcels/<parcel_id>
+    - Fetch all parcel delivery orders by a specific user  : api/v1/users/<user_id>/parcels
+    - Cancel a specific parcel delivery order : api/v1/parcels/<parcel_id>/cancel
 
 
 
 ## Tests
-Steps to follow:
-    Install the following packages in you virtual environment:
-        `pip install pytest`
-        `pip install pytest-cov`
+ Steps to follow:
+ Install the following packages in you virtual environment:
+         pip install pytest
+         pip install pytest-cov
 
-    Running the tests:
-        Run `pytest` in the terminal
+ Running the tests:
+         Run pytest in the terminal
 
-    This application runs on ***Heroku*** at: `https://partck-sendit.herokuapp.com/`
+ This application runs on Heroku at:(https://partck-sendit.herokuapp.com/api/v1/parcels)
 
-    Add the endpoints to the app.
+ Add the endpoints to the app.
