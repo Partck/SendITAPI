@@ -33,14 +33,15 @@ Export flask file and run
 URL FORMAT: `HOST/api/v1/endpoint`
     `For example: http://127.0.0.1:5000/api/v1/parcels`
 
-## Endpoints:
 The `/SendITapp` has the following endpoints:
-        - Create an account : `api/v1/users`
-        - Create a parcel delivery order : `api/v1/parcels`
-        - Fetch all parcel delivery orders  : `api/v1/parcels`
-        - Fetch a specific parcel delivery order  : `api/v1/parcels/<parcel_id>`
-        - Fetch all parcel delivery orders by a specific user  : `api/v1/users/<user_id>/parcels`
-        - Cancel a specific parcel delivery order : `api/v1/parcels/<parcel_id>/cancel`
+
+## Endpoints:
+    - Create an account : `api/v1/users`
+    - Create a parcel delivery order : `api/v1/parcels`
+    - Fetch all parcel delivery orders  : `api/v1/parcels`
+    - Fetch a specific parcel delivery order  : `api/v1/parcels/<parcel_id>`
+    - Fetch all parcel delivery orders by a specific user  : `api/v1/users/<user_id>/parcels`
+    - Cancel a specific parcel delivery order : `api/v1/parcels/<parcel_id>/cancel`
 
 
 
