@@ -4,7 +4,7 @@
 
 **SendIT** is a service that helps users track the parcel delivery orders.
 
-## How it Works
+## How it Works:
     An user register into the system.
     A user can add a parcel delivery order
     A user can view a single delivery order
@@ -33,8 +33,8 @@ Export flask file and run
 URL FORMAT: `HOST/api/v1/endpoint`
     `For example: http://127.0.0.1:5000/api/v1/parcels`
 
-The `/SendITapp` has the following endpoints:
 ## Endpoints:
+The `/SendITapp` has the following endpoints:
         - Create an account : `api/v1/users`
         - Create a parcel delivery order : `api/v1/parcels`
         - Fetch all parcel delivery orders  : `api/v1/parcels`
@@ -50,9 +50,9 @@ Steps to follow:
         `pip install pytest`
         `pip install pytest-cov`
 
-Running the tests:
-    Run `pytest` in the terminal
+    Running the tests:
+        Run `pytest` in the terminal
 
-This application runs on ***Heroku*** at: `https://partck-sendit.herokuapp.com/`
+    This application runs on ***Heroku*** at: `https://partck-sendit.herokuapp.com/`
 
-Add the endpoints to the app.
+    Add the endpoints to the app.
