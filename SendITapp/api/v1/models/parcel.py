@@ -16,10 +16,10 @@ class Parcel(object):
 
         id1 = str(uuid.uuid4().int)
         userid = str(uuid.uuid4().int)
-
+        
         payload = {"id": str(id1), "destination": self.destination,
         "recipient": self.recipient, "sender": self.sender,
-        "weight": self.weight, "userid": str(userid), "status": self.status, "price": self.price}
+        "weight": self.weight, "status": self.status, "price": self.price, "userid":userid}
 
         Parcel.parcels.append(payload)
         return True
