@@ -1,10 +1,10 @@
-# #By Partck 2018
+## By Partck 2018
 
 [![Build Status](https://travis-ci.org/Partck/SendITAPI.svg?branch=develop)](https://travis-ci.org/Partck/SendITAPI) [![Coverage Status](https://coveralls.io/repos/github/Partck/SendITAPI/badge.svg?branch=develop)](https://coveralls.io/github/Partck/SendITAPI?branch=develop)
 
 **SendIT** is a service that helps users track the parcel delivery orders.
 
-# #How it Works
+## How it Works
     An user register into the system.
     A user can add a parcel delivery order
     A user can view a single delivery order
@@ -13,11 +13,11 @@
     A user can see their details
     A user can see all orders attached to a specific user
 
-# #Prerequisite
+## Prerequisite
     `Python3.6`
     `A Virtual Environment`
 
-# # Installation and Setup
+## Installation and Setup
 Clone the repository below: `https://github.com/Partck/SendITAPI.git`
 Create and activate a virtual environment
     `virtualenv env --python=python3.6`
@@ -34,7 +34,7 @@ URL FORMAT: `HOST/api/v1/endpoint`
     `For example: http://127.0.0.1:5000/api/v1/parcels`
 
 The `/SendITapp` has the following endpoints:
-# # Endpoints:
+## Endpoints:
         - Create an account : `api/v1/users`
         - Create a parcel delivery order : `api/v1/parcels`
         - Fetch all parcel delivery orders  : `api/v1/parcels`
@@ -44,7 +44,7 @@ The `/SendITapp` has the following endpoints:
 
 
 
-# #Tests
+## Tests
 Steps to follow:
     Install the following packages in you virtual environment:
         `pip install pytest`
