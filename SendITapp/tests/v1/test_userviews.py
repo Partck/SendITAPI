@@ -35,6 +35,12 @@ class TestUserViews(unittest.TestCase):
                     "name": "Pit Pat", "email": "pat@mail.com", "role": "Admin",
                     "phone": "0712304050", "password": "qwerty", "retype_password": "qwerty"
                     }
+        #Dataset containing an incorrect role            
+        self.data4 = {
+                    "username": "pato",
+                    "name": "Pit Pat", "email": "pat@mail.com", "role": "admin",
+                    "phone": "0712304050", "password": "qwerty", "retype_password": "qwerty"
+                    }
       
 
     def test_create_user_order(self):
@@ -43,12 +49,12 @@ class TestUserViews(unittest.TestCase):
         response1 = self.app.post('/api/v1/users', data=json.dumps(self.data1), content_type='application/json')
         response2 = self.app.post('/api/v1/users', data=json.dumps(self.data2), content_type='application/json')
         response3 = self.app.post('/api/v1/users', data=json.dumps(self.data3), content_type='application/json')
-
+        response4 = self.app.post('/api/v1/users', data=json.dumps(self.data4), content_type='application/json')
         self.assertEqual(response.status_code, 200, msg="OK")
         self.assertEqual(response1.status_code, 400, msg="BAD REQUEST")
         self.assertEqual(response2.status_code, 400, msg="BAD REQUEST")
         self.assertEqual(response3.status_code, 400, msg="BAD REQUEST")
-
+        self.assertEqual(response4.status_code, 400, msg="BAD REQUEST")
 
     def test_get_all_users(self):
         """ This function tests getting of all users."""

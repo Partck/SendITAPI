@@ -48,6 +48,14 @@ class AllParcels(Resource):
                     answ = make_response(jsonify(payload), 400)
                     answ.content_type = 'application/json;charset=utf-8'
                     return answ
+            if key == 'status':
+                if data['status'] == "":
+                    if data['status'] != "Pending" or data['status'] != "Canceled" or data['status'] != "Delivered":
+                        message = 'Status can only be Pending, Delivered or Canceled'
+                        payload = {"Status": "Failed", "Message": message, "Data": data['status']}
+                        answ = make_response(jsonify(payload), 400)
+                        answ.content_type = 'application/json;charset=utf-8'
+                        return answ
 
         par1 = Parcel()
         par1.create_parcel(data["destination"], data["recipient"], data["sender"],

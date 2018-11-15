@@ -46,6 +46,14 @@ class User(Resource):
                     answ.content_type = 'application/json;charset=utf-8'
                     return answ
 
+            if key == 'phone':
+                if data['phone'] == "":
+                    message = 'Enter a valid number.'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+
 
 
         reply_info = user.create_user(data["username"], data["name"],
