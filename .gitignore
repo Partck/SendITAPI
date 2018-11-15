@@ -3,4 +3,5 @@
 env/
 .pytest_cache/
 README.md
+__pycache__/
 __pycache__
