@@ -47,7 +47,7 @@ class User(Resource):
                     return answ
 
             if key == 'phone':
-                if data['pnone'] != regex(r'^(?:\+?254)?[07]\d{9,13}$'):
+                if data['phone'] == "":
                     message = 'Enter a valid number.'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
