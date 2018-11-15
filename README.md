@@ -34,13 +34,13 @@ URL FORMAT: `HOST/api/v1/endpoint`
     `For example: http://127.0.0.1:5000/api/v1/parcels`
 
 The `/SendITapp` has the following endpoints:
-    Endpoints
-        -`POST` -- Create an account - `api/v1/users`
-        -`POST` -- Create a parcel delivery order - `api/v1/parcels`
-        -`GET` -- Fetch all parcel delivery orders  - `api/v1/parcels`
-        -`GET` -- Fetch a specific parcel delivery order  - `api/v1/parcels/<parcel_id>`
-        -`GET` -- Fetch all parcel delivery orders by a specific user  - `api/v1/users/<user_id>/parcels`
-        -`PUT` -- Cancel a specific parcel delivery order - `api/v1/parcels/<parcel_id>/cancel`
+    Endpoints:
+        * `POST` -- Create an account - `api/v1/users`
+        * `POST` -- Create a parcel delivery order - `api/v1/parcels`
+        * `GET` -- Fetch all parcel delivery orders  - `api/v1/parcels`
+        * `GET` -- Fetch a specific parcel delivery order  - `api/v1/parcels/<parcel_id>`
+        * `GET` -- Fetch all parcel delivery orders by a specific user  - `api/v1/users/<user_id>/parcels`
+        * `PUT` -- Cancel a specific parcel delivery order - `api/v1/parcels/<parcel_id>/cancel`
 
 
 
