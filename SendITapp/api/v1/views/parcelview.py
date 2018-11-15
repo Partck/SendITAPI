@@ -25,8 +25,8 @@ class AllParcels(Resource):
         for key in data.keys():
 
             """Check email validation."""
-            if key == 'sender' :
-                if data['sender'] == "":
+            if key == 'sender':
+                if data['sender'] == "" or data['sender'].isalpha()==False:
                     message = 'Please confirm the sender'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
@@ -34,7 +34,8 @@ class AllParcels(Resource):
                     return answ
 
             if key == 'destination' or key =='recipient':
-                if data['destination'] == "" or data['recipient'] == "":
+                if data['destination'] == "" or data['recipient'] == ""\
+                or data['recipient'].isalpha()== False or data['destination'].isalpha()==False:
                     message = 'Check your details. Destination, Recipient...'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
@@ -49,8 +50,8 @@ class AllParcels(Resource):
                     answ.content_type = 'application/json;charset=utf-8'
                     return answ
             if key == 'status':
-                if data['status'] == "":
-                    if data['status'] != "Pending" or data['status'] != "Canceled" or data['status'] != "Delivered":
+                accepted=["Pending","Canceled","Delivered"]
+                if data['status'] not in accepted:
                         message = 'Status can only be Pending, Delivered or Canceled'
                         payload = {"Status": "Failed", "Message": message, "Data": data['status']}
                         answ = make_response(jsonify(payload), 400)

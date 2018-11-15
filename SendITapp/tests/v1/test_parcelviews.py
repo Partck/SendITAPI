@@ -65,7 +65,6 @@ class TestParcelViews(unittest.TestCase):
 
     def test_get_orders_by_user(self):
         """This function tests function for getting orders by a user"""
-        
         response = self.app.get("/api/v1/users/10/parcels")
         assert response.status_code == 404
 
