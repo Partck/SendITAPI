@@ -44,7 +44,7 @@ class TestUserViews(unittest.TestCase):
       
 
     def test_create_user_order(self):
-        """ Test create a new parcel order. """
+        """ Test create a new user. """
         response = self.app.post('/api/v1/users', data=json.dumps(self.data), content_type='application/json')
         response1 = self.app.post('/api/v1/users', data=json.dumps(self.data1), content_type='application/json')
         response2 = self.app.post('/api/v1/users', data=json.dumps(self.data2), content_type='application/json')

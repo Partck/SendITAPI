@@ -19,7 +19,7 @@ class TestParcelViews(unittest.TestCase):
             "recipient": "John",
             "sender": "Maina",
             "weight": "24",
-            "price": "100",
+            "price": "Paid",
             "status": "Pending",
             "userid": "2"}
 
@@ -29,7 +29,7 @@ class TestParcelViews(unittest.TestCase):
             "recipient": "John",
             "sender": "Maina",
             "weight": "24",
-            "price": "100",
+            "price": "Paid",
             "status": "Pending",
             "userid": "2"}
 

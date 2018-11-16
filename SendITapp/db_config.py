@@ -1,17 +1,8 @@
 import os
 import psycopg2
 
-host = "localhost"
-user = "pyper"
-db_name = "SendIT_db"
-password = "QWERTY"
-port = 5432
-
-url = "host ={} user = {}, pasword, port"
-con = psycopg2.connect(url)
-cur = con.cursor()
-cursor.execute(sql)
-
+url = "dbname = 'senditdb' host = 'localhost' port = '5432'\
+     user = 'sendit_user' password = 'qwerty'"
 
 def connection(url):
     con = psycopg2.connect(url)
@@ -32,8 +23,39 @@ def create_tables():
 
 
 def destroy_tables():
-    pass
+    conn = connection(url)
+    curr = conn.cursor()
+    parcels = """DROP TABLE IF EXISTS Parcels_table CASCADE;"""
+    users = """DROP TABLE IF EXISTS Users_table CASCADE;"""
+    queries = [users, parcels]
+    for query in queries:
+        curr.execute(query)
+    conn.commit
 
 
 def tables():
-    pass
+    users = """CREATE TABLE IF NOT EXISTS Users_table (
+    userid VARCHAR (256) PRIMARY KEY,
+    name  VARCHAR (256) NOT NULL,
+    role VARCHAR (256) NOT NULL DEFAULT 'user',
+    email VARCHAR (256) NOT NULL UNIQUE,
+    phone VARCHAR (256) NOT NULL UNIQUE,
+    password VARCHAR (256) NOT NULL,
+    username VARCHAR (256) NOT NULL
+    );
+
+    """
+
+    parcels = """CREATE TABLE IF NOT EXISTS Parcels_table (
+    parcelid VARCHAR (256) PRIMARY KEY,
+    weight VARCHAR (256) NOT NULL,
+    destination VARCHAR (256) NOT NULL,
+    sender VARCHAR (256) NOT NULL,
+    recipient VARCHAR (256) NOT NULL,
+    status VARCHAR (256) NOT NULL DEFAULT 'Pending Delivery',
+    price VARCHAR (256) NOT NULL,
+    userid VARCHAR (256) NOT NULL
+    );"""
+
+    queries = [users, parcels]
+    return queries

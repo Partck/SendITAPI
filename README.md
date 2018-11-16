@@ -58,3 +58,5 @@
  This application runs on Heroku at:(https://partck-sendit.herokuapp.com/api/v1/parcels)
 
  Add the endpoints to the app.
+
+ Documentation :(https://documenter.getpostman.com/view/5804239/RzZCEdYd)

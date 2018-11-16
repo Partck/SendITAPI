@@ -1,7 +1,6 @@
 from flask import request, make_response, jsonify
-import re
 from flask_restful import Resource
-from SendITapp.api.v1.models.users import UserModel
+from SendITapp.api.v2.models.users import UserModel
 
 
 class User(Resource):
@@ -15,9 +14,7 @@ class User(Resource):
         for key in data.keys():
             #Check email validation
             if key == 'username' or key =='name':
-                username = data['username'].replace(" ", "")
-                name = data['name'].replace(" ", "")
-                if not (re.match("^[a-zA-Z0-9_]*$", username)) or not (re.match("^[a-zA-Z0-9_]*$", name)):
+                if data['username'] == "" or data['name'] == "":
                     message = 'Check your name and usename'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
@@ -34,8 +31,7 @@ class User(Resource):
                     return answ
 
             if key == 'password':
-                password = data['password'].replace(" ", "")
-                if not (re.match("^[a-zA-Z0-9_]*$", password)) or data['password'] != data["retype_password"]:
+                if data['password'] == "" or data['password'] != data["retype_password"]:
                     message = 'Check your password.'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
@@ -45,14 +41,6 @@ class User(Resource):
             if key == 'role':
                 if data['role'] != "Admin" and data["role"] != "User":
                     message = 'Role input can either be Admin or User'
-                    payload = {"Status": "Failed", "Message": message}
-                    answ = make_response(jsonify(payload), 400)
-                    answ.content_type = 'application/json;charset=utf-8'
-                    return answ
-
-            if key == 'phone':
-                if data['phone'] == "":
-                    message = 'Enter a valid number.'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
                     answ.content_type = 'application/json;charset=utf-8'
