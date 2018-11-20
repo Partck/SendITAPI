@@ -1,6 +1,7 @@
 from flask import request, make_response, jsonify
 from flask_restful import Resource
 from SendITapp.api.v1.models.users import UserModel
+from passlib.hash import sha256_crypt
 
 
 class User(Resource):
@@ -12,16 +13,13 @@ class User(Resource):
         user = UserModel()
 
         for key in data.keys():
-            #Check email validation
-            if key == 'username' or key =='name':
+            if key == 'username' or key == 'name':
                 if data['username'] == "" or data['name'] == "":
                     message = 'Check your name and usename'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
                     answ.content_type = 'application/json;charset=utf-8'
                     return answ
-
-
             if key == 'email':
                 if data[key].find("@") < 2:
                     message = 'Incorrect email format'
@@ -54,16 +52,20 @@ class User(Resource):
                     answ.content_type = 'application/json;charset=utf-8'
                     return answ
 
-
-
+        password = sha256_crypt.encrypt("password")
         reply_info = user.create_user(data["username"], data["name"],
-         data["email"], data["role"], data["phone"], data["password"])
+         data["email"], data["role"], data["phone"], password)
 
-        if reply_info == True:
-            user_data = [data["username"], data["name"],
-            data["email"], data["role"], data["phone"], data["password"]]
+        if reply_info:
+            user_data = {
+                "username": data["username"],
+                "name": data["name"],
+                "Email": data["email"],
+                "Role": data["role"],
+                "phone": data["phone"]
+                }
 
-            payload = {"Status": "created",
+            payload = {"Status": "User Registered",
             "User": user_data}
             answ = make_response(jsonify(payload), 200)
             answ.content_type = 'application/json;charset=utf-8'
@@ -73,9 +75,6 @@ class User(Resource):
         answ = make_response(jsonify(payload), 400)
         answ.content_type = 'application/json;charset=utf-8'
         return answ
-
-        
-
 
     def get(self):
         """Method to get all the parcels."""
