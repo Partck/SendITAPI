@@ -1,10 +1,14 @@
+
 from flask import request, make_response, jsonify
+import re
+from flask_jwt_extended import create_access_token
 from flask_restful import Resource
-from SendITapp.api.v1.models.users import UserModel
+from SendITapp.api.v2.models.users import UserModel
+from flask_jwt_extended import jwt_required
 from passlib.hash import sha256_crypt
 
 
-class User(Resource):
+class Register(Resource):
     """Handle user CRUD."""
 
     def post(self):
@@ -14,12 +18,16 @@ class User(Resource):
 
         for key in data.keys():
             if key == 'username' or key == 'name':
-                if data['username'] == "" or data['name'] == "":
+                username = data['username'].replace(" ", "")
+                name = data['name'].replace(" ", "")
+                if not (re.match("^[a-zA-Z0-9_]*$", username)) or\
+                    not (re.match("^[a-zA-Z0-9_]*$", name)):
                     message = 'Check your name and usename'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
                     answ.content_type = 'application/json;charset=utf-8'
                     return answ
+
             if key == 'email':
                 if data[key].find("@") < 2:
                     message = 'Incorrect email format'
@@ -29,7 +37,9 @@ class User(Resource):
                     return answ
 
             if key == 'password':
-                if data['password'] == "" or data['password'] != data["retype_password"]:
+                password = data['password'].replace(" ", "")
+                if not (re.match("^[a-zA-Z0-9_]*$", password)) or \
+                data['password'] != data["retype_password"]:
                     message = 'Check your password.'
                     payload = {"Status": "Failed", "Message": message}
                     answ = make_response(jsonify(payload), 400)
@@ -54,18 +64,13 @@ class User(Resource):
 
         password = sha256_crypt.encrypt("password")
         reply_info = user.create_user(data["username"], data["name"],
-         data["email"], data["role"], data["phone"], password)
+            data["email"], data["role"], data["phone"], password)
 
         if reply_info:
-            user_data = {
-                "username": data["username"],
-                "name": data["name"],
-                "Email": data["email"],
-                "Role": data["role"],
-                "phone": data["phone"]
-                }
+            user_data = [data["username"], data["name"],
+            data["email"], data["role"], data["phone"]]
 
-            payload = {"Status": "User Registered",
+            payload = {"Status": "User registered",
             "User": user_data}
             answ = make_response(jsonify(payload), 200)
             answ.content_type = 'application/json;charset=utf-8'
@@ -76,6 +81,7 @@ class User(Resource):
         answ.content_type = 'application/json;charset=utf-8'
         return answ
 
+    @jwt_required
     def get(self):
         """Method to get all the parcels."""
         user1 = UserModel()
@@ -92,7 +98,7 @@ class User(Resource):
 
 class SingleUser(Resource):
     """Single parcel class."""
-
+    @jwt_required
     def get(self, userid):
         """Get single item."""
         user = UserModel()
@@ -110,3 +116,34 @@ class SingleUser(Resource):
             answ = make_response(jsonify(pack), 404)
             answ.content_type = 'application/json;charset=utf-8'
             return answ
+
+
+class Login(Resource):
+    """This class creates a view for login/authentication"""
+
+    def post(self):
+        data = request.get_json() or {}
+        for key in data.keys():
+            if key == 'email':
+                if data[key].find("@") < 2:
+                    message = 'Incorrect email format'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+
+            if key == 'password':
+                password = data['password'].replace(" ", "")
+                if not (re.match("^[a-zA-Z0-9_]*$", password)):
+                    message = 'Check your password.'
+                    payload = {"Status": "Failed", "Message": message}
+                    answ = make_response(jsonify(payload), 400)
+                    answ.content_type = 'application/json;charset=utf-8'
+                    return answ
+        user = UserModel()
+        email = data["email"]
+        password = data["password"]
+        auth = user.user_login(email)
+        auth[0]
+        return auth
+

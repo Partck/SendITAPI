@@ -1,16 +1,13 @@
 import os
 import psycopg2
 
-host = "localhost"
-user = "pyper"
-db_name = "SendIT_db"
-password = "QWERTY"
-port = 5432
+"""
+url = "dbname = 'd8osr4jq6ahd25' host = 'ec2-54-204-36-249.compute-1.amazonaws.com' port = '5432'\
+     user = 'jkaegobpsrhntk' password = 'ee912001d1be919a6e88385a69e75f54f4c757ca9ca5293ea25e28b29d267148'"
+"""
 
-url = "host ={} user = {}, pasword, port"
-con = psycopg2.connect(url)
-cur = con.cursor()
-cursor.execute(sql)
+url = "dbname = 'senditdb' host = 'localhost' port = '5432'\
+     user = 'sendit_user' password = 'qwerty'"
 
 
 def connection(url):

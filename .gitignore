@@ -1,7 +1,10 @@
-*/__pycache__/*
-*.pyc
+__pycache__
 env/
 .pytest_cache/
 README.md
 __pycache__/
 __pycache__
+*.cpython-36
+*.cpython-36-PYTEST.pyc
+*.pyc
+*.py[cod]
