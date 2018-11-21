@@ -1,5 +1,4 @@
 """Unique identifier library."""
-from passlib.hash import pbkdf2_sha256 as sha256
 import uuid
 from SendITapp.db_config import init_db
 import psycopg2
@@ -7,16 +6,6 @@ import psycopg2
 
 class UserModel(object):
     """This class does User CRUD operations."""
-    @staticmethod
-    def generate_hash(password):
-        return sha256.hash(password)
-
-    @staticmethod
-    def verify_hash(password, hash):
-        return sha256.verify(password, hash)
-
-
-
     def create_user(self, username, name, email, role, phone, password):
         """Allow the admin to create a user."""
         self.db = init_db()
