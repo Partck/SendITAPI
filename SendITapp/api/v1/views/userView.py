@@ -55,9 +55,7 @@ class User(Resource):
             
 
         # password = bcrypt.hashpw(data["password"], bcrypt.gensalt())
-        password = data['password']
-        reply_info = user.create_user(data["username"], data["name"],
-         data["email"], data["role"], data["phone"], password)
+        reply_info = user.create_user(data)
 
         if reply_info:
             user_data = {
