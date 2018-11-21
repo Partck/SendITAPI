@@ -4,7 +4,7 @@ from flask import Flask, make_response, jsonify
 from instance.config import Config
 from SendITapp.api.v1 import superv1_blueprint
 from SendITapp.api.v2 import superv2_blueprint
-from SendITapp.db_config import create_tables, init_db
+from SendITapp.db_config import DbConfig
 from flask_jwt_extended import JWTManager
 
 
@@ -16,8 +16,9 @@ def page_not_found(e):
 def create_app(config_class=Config):
     """Create the app."""
     app = Flask(__name__)
-    init_db()
-    create_tables()
+    db = DbConfig()
+    db.init_db()
+    db.create_tables()
     app.config.from_object(config_class)
     app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET_KEY') or "candy"
     jwt = JWTManager(app)
