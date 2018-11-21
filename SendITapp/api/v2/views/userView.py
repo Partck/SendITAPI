@@ -25,15 +25,15 @@ class Register(Resource):
             not (re.match("^[a-zA-Z0-9_]*$", name)):
             message = 'Check your name and usename'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            return make_response(jsonify(payload), 400)
+            
 
     
         if data["email"].find("@") < 2:
             message = 'Incorrect email format'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            return make_response(jsonify(payload), 400)
+            
 
     
         password = data['password'].strip()
@@ -41,26 +41,26 @@ class Register(Resource):
         data['password'] != data["retype_password"]:
             message = 'Check your password.'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            return make_response(jsonify(payload), 400)
+            
 
     
         if data['role'] != "Admin" and data["role"] != "User":
             message = 'Role input can either be Admin or User'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            return make_response(jsonify(payload), 400)
+            
 
     
         if data['phone'] == "":
             message = 'Enter a valid number.'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            return make_response(jsonify(payload), 400)
+            
 
-        #password = bcrypt.hashpw(password, bcrypt.gensalt())
+        password = bcrypt.hashpw(data["password"], bcrypt.gensalt())
         reply_info = user.create_user(data["username"], data["name"],
-         data["email"], data["role"], data["phone"], data["password"])
+         data["email"], data["role"], data["phone"], password)
 
         if reply_info:
             user_data = [data["username"], data["name"],
@@ -68,12 +68,12 @@ class Register(Resource):
 
             payload = {"Status": "created",
             "User": user_data}
-            answ = make_response(jsonify(payload), 200)
-            return answ
+            return make_response(jsonify(payload), 200)
+            
 
         payload = {"Status": "Failed", "Message": reply_info}
-        answ = make_response(jsonify(payload), 400)
-        return answ
+        return make_response(jsonify(payload), 400)
+        
 
     @jwt_required
     def get(self):
@@ -85,8 +85,8 @@ class Register(Resource):
             "Status": "Ok",
             "Users": all_users
         }
-        answ = make_response(jsonify(payload), 200)
-        return answ
+        return make_response(jsonify(payload), 200)
+        
 
 
 class SingleUser(Resource):
@@ -101,12 +101,12 @@ class SingleUser(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            answ = make_response(jsonify(reply), 200)
-            return answ
+            return make_response(jsonify(reply), 200)
+            
         else:
             pack = {"Status": "User does not exist!"}
-            answ = make_response(jsonify(pack), 404)
-            return answ
+            return make_response(jsonify(pack), 404)
+            
 
 
 class Login(Resource):
@@ -118,16 +118,16 @@ class Login(Resource):
         if data["email"].find("@") < 2:
             message = 'Incorrect email format'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            return make_response(jsonify(payload), 400)
+            
 
     
         password = data['password'].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", password)):
             message = 'Check your password.'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            return make_response(jsonify(payload), 400)
+            
         
         user = UserModel()
         email = data["email"]
