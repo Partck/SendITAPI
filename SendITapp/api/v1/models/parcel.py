@@ -5,14 +5,14 @@ class Parcel(object):
     """Parcel model."""
 
     parcels = []
-    def create_parcel(self, destination, recipient, sender, weight, price, status):
+    def create_parcel(self, data):
         """Create parcel order. It stores data in a data list."""
-        self.destination = destination
-        self.recipient = recipient
-        self.sender = sender
-        self.weight = weight
-        self.price = price
-        self.status = status
+        self.destination = data["destination"]
+        self.recipient = data["recipient"]
+        self.sender = data["sender"]
+        self.weight = data["weight"]
+        self.price = data["price"]
+        self.status = data["status"]
 
         id1 = str(uuid.uuid4().int)
         userid = str(uuid.uuid4().int)

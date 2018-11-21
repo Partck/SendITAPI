@@ -86,8 +86,7 @@ class AllParcels(Resource):
                 return make_response(jsonify(payload), 400)
 
         parcel = Parcel()
-        parcel.create_parcel(data["destination"], data["recipient"], data["sender"],
-        data["weight"], data["price"], data["status"])
+        parcel.create_parcel(data)
 
         payload = {"Status": "Created.....Your order is on its way", "Parcel": data}
         return make_response(jsonify(payload), 200)
