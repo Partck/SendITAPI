@@ -41,6 +41,12 @@ class TestUserViews(unittest.TestCase):
                     "name": "Pit Pat", "email": "pat@mail.com", "role": "admin",
                     "phone": "0712304050", "password": "qwerty", "retype_password": "qwerty"
                     }
+            #login data sample
+        self.login =    {
+                "email": "pat@mail.com",
+                "password": "qwerty"
+                }
+
 
     def test_create_user_with_correct_mail(self):
         """ Test create a new parcel order. """
@@ -102,5 +108,7 @@ class TestUserViews(unittest.TestCase):
         result = json.loads(response1.data)
         assert response1.status_code == 404
         self.assertIn('User does not exist!', str(result))
+
+
 
     
