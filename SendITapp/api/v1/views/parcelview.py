@@ -23,68 +23,63 @@ class AllParcels(Resource):
         """Method to create a parcel order. It uses the POST method"""
         data = request.get_json() or {}
         """Check email validation."""            
-        if data['sender'] == "":
-            message = 'Please enter the name of the sender'
-            payload = {"Status": "Failed", "Message": message}            
-            return make_response(jsonify(payload), 400)
-
-        if  data['sender'].isalpha()==False:
+        sender = data["sender"].strip()
+        if not (re.match("^[a-zA-Z0-9_]*$", sender)):
             message = 'Incorrect input in sender'
             payload = {"Status": "Failed", "Message": message}
-            
             return make_response(jsonify(payload), 400)
 
-    
-        if data['destination'] == "":
+        if data["sender"] == "":
+            message = 'Enter the sender'
+            payload = {"Status": "Failed", "Message": message}
+            return make_response(jsonify(payload), 400)
+            
+        recipient = data["recipient"].strip()
+        
+        if not (re.match("^[a-zA-Z0-9_]*$", recipient)):
+            message = 'Check the recipient.'
+            payload = {"Status": "Failed", "Message": message}
+            return make_response(jsonify(payload), 400)
+        
+        destination = data["destination"].strip()
+        if not (re.match("^[a-zA-Z0-9_]*$", destination)):
+            message = 'Check the destination.'
+            payload = {"Status": "Failed", "Message": message}
+            return make_response(jsonify(payload), 400)
+
+        if data["destination"] == "":
             message = 'Enter the destination'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
-        
-        if data['recipient'] == "":
+            
+        if data["recipient"] == "":
             message = 'Enter the recipient'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
-
-        if data['recipient'].isalpha()== False:
-            message = 'Incorrect input for recipient'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-            
-        if data['destination'].isalpha()==False:
-            message = 'Incorrect input for destination'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-
     
-        if data['price'] == "":
-            message = 'Enter the price'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-        
+        weight = data["weight"].strip()
         price_status = ["Paid", "Not Paid"]
         if data['price'] not in price_status:
             message = 'Price status is: Paid or Not Paid.'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
             
-        if data['weight'] == "":
-            message = 'Enter the weight'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-
-        weight = data['weight']
         if not (re.match("^[a-zA-Z0-9_]*$", weight)):
             message = 'Incorrect weight format.'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
             
+        if data["weight"] == "":
+            message = 'Enter the weight'
+            payload = {"Status": "Failed", "Message": message}
+            return make_response(jsonify(payload), 400)
+            
     
         accepted=["Pending","Canceled","Delivered"]
-        if data['status'] not in accepted:
+        if data["status"] not in accepted:
                 message = 'Status can only be Pending, Delivered or Canceled'
                 payload = {"Status": "Failed", "Message": message, "Data": data['status']}
                 return make_response(jsonify(payload), 400)
-
         parcel = Parcel()
         parcel.create_parcel(data)
 
