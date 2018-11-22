@@ -2,8 +2,8 @@ import os
 import psycopg2
 class DbConfig:
     def __init__(self):
-        self.url = "dbname = 'd8osr4jq6ahd25' host = 'ec2-54-204-36-249.compute-1.amazonaws.com' port = '5432'\
-        user = 'jkaegobpsrhntk' password = 'ee912001d1be919a6e88385a69e75f54f4c757ca9ca5293ea25e28b29d267148'"
+        self.url = os.environ.get("URL")
+              
 
 
     def connection(self, url):
