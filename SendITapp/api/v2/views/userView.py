@@ -128,8 +128,9 @@ class Login(Resource):
         user = UserModel()
         password = user.user_password(data["email"])
         email = user.user_email(data["email"])
+        # if check_password_hash(password["password"], data["password"]):
 
-        if check_password_hash(password["password"], data["password"]):
+        if data["password"] ==password["password"]:
             access_token = create_access_token(identity=email["email"])
             return make_response(jsonify({"message": "Successful login",
             "token": access_token

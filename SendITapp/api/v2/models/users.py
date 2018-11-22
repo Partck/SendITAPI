@@ -4,7 +4,6 @@ import uuid
 from SendITapp.db_config import DbConfig
 import psycopg2
 from psycopg2.extras import RealDictCursor
-
 from flask_jwt_extended import get_jwt_identity
 
 
@@ -24,7 +23,8 @@ class UserModel(object):
         self.role = data["role"]
         self.email = data["email"]
         self.phone = data["phone"]
-        self.password = generate_password_hash(data["password"])
+        # self.password = generate_password_hash(data["password"])
+        self.password = data["password"]
         
         userid = str(uuid.uuid4())
 
