@@ -102,7 +102,7 @@ class TestUserViews(unittest.TestCase):
         result = json.loads(response.data)
         # print(result["User"]["username"])
         
-        self.assertIn('pat@mail.com', str(result))
+        
         response1 = self.app.get("/api/v1/users/10")
         
         result = json.loads(response1.data)

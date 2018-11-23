@@ -58,16 +58,8 @@ class User(Resource):
         reply_info = user.create_user(data)
 
         if reply_info:
-            user_data = {
-                "username": data["username"],
-                "name": data["name"],
-                "Email": data["email"],
-                "Role": data["role"],
-                "phone": data["phone"]
-                }
-
             payload = {"Status": "User Registered",
-            "User": user_data}
+            "User": reply_info}
             return make_response(jsonify(payload), 200)
             
 
