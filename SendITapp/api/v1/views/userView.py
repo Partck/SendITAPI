@@ -1,7 +1,7 @@
 from flask import request, make_response, jsonify
 from flask_restful import Resource
 from SendITapp.api.v1.models.users import UserModel
-import bcrypt
+
 
 
 class User(Resource):

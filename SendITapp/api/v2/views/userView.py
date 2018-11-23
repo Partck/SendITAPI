@@ -5,7 +5,7 @@ import re
 from flask_restful import Resource
 from SendITapp.api.v2.models.users import UserModel
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
-import bcrypt
+
 
 
 class Register(Resource):
