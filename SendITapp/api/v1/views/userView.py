@@ -54,7 +54,7 @@ class User(Resource):
             return make_response(jsonify(payload), 400)
             
 
-        # password = bcrypt.hashpw(data["password"], bcrypt.gensalt())
+        
         reply_info = user.create_user(data)
 
         if reply_info:
