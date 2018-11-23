@@ -23,69 +23,55 @@ class UserModel(object):
         self.role = data["role"]
         self.email = data["email"]
         self.phone = data["phone"]
-        # self.password = generate_password_hash(data["password"])
-        self.password = data["password"]
-        
+        self.password =data["password"]
         userid = str(uuid.uuid4())
 
-        try:
-            self.cursor.execute("""INSERT INTO Users_table (userid, username, name,
-                        email, role, phone, password) VALUES
-                        (%s, %s, %s, %s, %s, %s, %s)""", (userid, self.username,
-                        self.name, self.email,
-                        self.role, self.phone, self.password))
-            self.db.commit()
-            self.cursor.close()
-            return True
-        except (Exception, psycopg2.DatabaseError):
-            return "Check you email or password"
-        finally:
-            if self.db is not None:
-                self.db.close()
-
-    
+        self.cursor.execute("""INSERT INTO Users_table (userid, username, name,
+        email, role, phone, password) VALUES (%s, %s, %s, %s, %s, %s, %s)""", 
+        (userid, self.username, self.name, self.email, self.role, self.phone, self.password))
+        self.db.commit()
+        self.cursor.execute("""SELECT userid, name, username,
+                    phone, role, email FROM Users_table WHERE userid = %s""", (userid, ))
+        row = self.cursor.fetchone()
+        
+        return row
+      
     def get_all(self):
         """This method returns all users in the system."""
-        self.cursor.execute("""SELECT (role) FROM Users_table WHERE
+        self.cursor.execute("""SELECT role FROM Users_table WHERE
                      email = %s""", (self.user, ))
         user = self.cursor.fetchone()
-
         if user["role"] == "Admin":
-            self.cursor.execute("""SELECT (name, username,
-                     phone, role, email) FROM Users_table""")
+            self.cursor.execute("""SELECT name, username,
+                     phone, role, email FROM Users_table""")
             rows = self.cursor.fetchall()
             self.db.close()
             return rows
         return "You are not Admin"
+        
+        
     
     def get_user(self, userid):
         """Get one user."""
-        
-        self.cursor.execute("""SELECT (userid, name, username,
-                     phone, role, email) FROM Users_table WHERE userid = %s""", (userid, ))
+        self.cursor.execute("""SELECT userid, name, username,
+                     phone, role, email FROM Users_table WHERE userid = %s""", (userid, ))
         row = self.cursor.fetchone()
         self.db.close()
         return row
 
-    def user_email(self, email):       
-        
-        self.cursor.execute("""SELECT (email) FROM Users_table WHERE
-                     email = %s""", (email, ))
+    def user_details(self, email):
+        """Get one user."""
+        self.cursor.execute("""SELECT userid, name, username,
+                     phone, role, email, password FROM Users_table WHERE email = %s""", (email, ))
         row = self.cursor.fetchone()
+        self.db.close()
         return row
     
-    def user_password(self, email):       
-        
-        self.cursor.execute("""SELECT (password) FROM Users_table WHERE
-                     email = %s""", (email, ))
-        row = self.cursor.fetchone()
-        return row
     
     def get_userid(self, email):
         """Get one user."""
-        
-        self.cursor.execute("""SELECT (userid, name, username,
-                     phone, role, email) FROM Users_table WHERE email = %s""", (email, ))
+        self.cursor.execute("""SELECT userid, name, username,
+                     phone, role, email FROM Users_table WHERE email = %s""", (email, ))
         row = self.cursor.fetchone()
         self.db.close()
         return row

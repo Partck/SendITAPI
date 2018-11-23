@@ -2,7 +2,7 @@ import os
 import psycopg2
 class DbConfig:
     def __init__(self):
-        self.url = os.environ.get("URL")
+        self.url = os.getenv("URL")
               
 
 

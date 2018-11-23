@@ -12,6 +12,10 @@ def page_not_found(e):
     return make_response(jsonify(
         {"Message": "The URL you have entered is not on this server"}), 404)
 
+def error_500(e):
+    return make_response(jsonify(
+        {"Message": "INTERNAL ERROR!"}), 500)
+
 
 def create_app(config_class=config["dev"]):
     """Create the app."""
@@ -26,4 +30,5 @@ def create_app(config_class=config["dev"]):
     app.register_blueprint(superv1_blueprint)
     app.register_blueprint(superv2_blueprint)
     app.register_error_handler(404, page_not_found)
+    app.register_error_handler(500, page_not_found)
     return app

@@ -25,6 +25,8 @@ class AllParcels(Resource):
     def post(self):
         """Method to create a parcel order. It uses the POST method"""
         data = request.get_json() or {}
+        if not data:
+            return "please fill the fields"
         sender = data["sender"].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", sender)):
             message = 'Incorrect input in sender'
@@ -35,9 +37,8 @@ class AllParcels(Resource):
             message = 'Enter the sender'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
-            
-        recipient = data["recipient"].strip()
         
+        recipient = data["recipient"].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", recipient)):
             message = 'Check the recipient.'
             payload = {"Status": "Failed", "Message": message}
@@ -84,10 +85,17 @@ class AllParcels(Resource):
                 return make_response(jsonify(payload), 400)
                 
         parcel = Parcel()
-        data1 = parcel.create_parcel(data)
+        response = parcel.create_parcel(data)
+        if response == str():
+            return response
+        if response:
+            payload = {"Status": "Created.....Your order is on its way", "Parcel": response}
+            return make_response(jsonify(payload), 200)
+        payload = {"Status": "Failed", "Parcel": response}
+        return make_response(jsonify(payload), 200)    
 
-        payload = {"Status": "Created.....Your order is on its way", "Parcel": data1}
-        return make_response(jsonify(payload), 200)
+
+        
         
 class SingleParcel(Resource):
     """Single parcel class."""
@@ -203,7 +211,9 @@ class CancelParcelOrder(Resource):
         parcelid = str(parcelid)
         parcel = Parcel()
         query_result = parcel.cancel_pending_order(parcelid)
-        return query_result
+        if query_result:
+            return query_result
+        return "No record found!"
 
 
 class UpdateDestinationOrder(Resource):
@@ -222,4 +232,6 @@ class UpdateDestinationOrder(Resource):
         parcelid = str(parcelid)
         parcel = Parcel()
         query_result = parcel.update_pending_order(parcelid,destination)
-        return query_result
+        if query_result:
+            return query_result
+        return "No parcel found!"

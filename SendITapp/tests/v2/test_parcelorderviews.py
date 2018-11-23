@@ -22,8 +22,8 @@ class TestParcelViews(unittest.TestCase):
         self.app = create_app(config_class=config["test"]).test_client()
         self.data = {
                     "username": "pato",
-                    "name": "Pit Pat", "email": "pat@mail.com", "role": "Admin",
-                    "phone": "0712304050", "password": "qwerty", "retype_password": "qwerty"
+                    "name": "Pit Pat", "email": "deo32@mail.com", "role": "Admin",
+                    "phone": "0713984050", "password": "qwerty", "retype_password": "qwerty"
                     }
         self.token = self.get_token()
                     
@@ -143,8 +143,3 @@ class TestParcelViews(unittest.TestCase):
         result = json.loads(response.data)
         self.assertIn('Price status is: Paid or Not Paid.',str(result))
         self.assertEqual(response.status_code, 400, msg="BAD REQUEST")
-
-
-
-
-   

@@ -13,7 +13,6 @@ class Parcel(object):
         self.cursor = self.db.cursor(cursor_factory=RealDictCursor)
         self.user = get_jwt_identity()
         
-        
     def create_parcel(self,data):
         """Create parcel order. It stores data in a data list."""
         self.destination = data["destination"]
@@ -24,40 +23,46 @@ class Parcel(object):
         self.status = data["status"]
         
         id1 = str(uuid.uuid4())
-        
-        self.cursor.execute("""SELECT (userid) FROM Users_table WHERE
+        try:
+            self.cursor.execute("""SELECT (userid) FROM Users_table WHERE
                      email = %s""", (self.user, ))
-        userid = self.cursor.fetchone()
-
-        self.cursor.execute("""INSERT INTO Parcels_table (parcelid, weight, destination,\
+            userid = self.cursor.fetchone()
+            self.cursor.execute("""INSERT INTO Parcels_table (parcelid, weight, destination,\
                      sender, recipient, status, price, userid) VALUES
                      (%s, %s, %s, %s, %s, %s, %s, %s )""", (id1, self.weight,
                         self.destination, self.sender,
                     self.recipient, self.status, self.price, userid["userid"]))
-        self.db.commit()
-        
-        self.cursor.execute("""SELECT (parcelid, weight, destination,\
-                    sender, recipient, status, price, userid) FROM Parcels_table\
-                    WHERE userid = %s""", (id1, ))
-        rows = self.cursor.fetchone()
-        self.db.close()
-        return rows
+            self.db.commit()
+            self.cursor.execute("""SELECT parcelid, userid, sender, destination,\
+         weight, price, status FROM Parcels_table\
+                    WHERE parcelid = %s""", (id1, ))
+            parcel_orders = self.cursor.fetchone()
+            self.db.commit()                  
+            return parcel_orders
+        except (Exception, psycopg2.DatabaseError):
+            return "Failed"
+        finally:
+            if self.db is not None:
+                self.db.close()
+
+
+
+
+
+
        
 
     def get_all(self):
         """This method returns all parcels in the system."""
-        
-        
-        self.cursor.execute("""SELECT (parcelid, weight, destination,\
-                     sender, recipient, status, price, userid) FROM Parcels_table""")
-        rows = self.cursor.fetchall()
-        self.db.close()
-        return rows
+        self.cursor.execute("""SELECT parcelid, userid, sender, destination, 
+        weight, price, status FROM Parcels_table""")
+        parcel_orders = self.cursor.fetchall()               
+        return parcel_orders
 
     def get_one_parcel(self, id):
         """Get one parcel."""
-        self.cursor.execute("""SELECT (parcelid, weight, destination,\
-                     sender, recipient, status, price, userid)\
+        self.cursor.execute("""SELECT parcelid, weight, destination,\
+                     sender, recipient, status, price, userid\
                       FROM Parcels_table WHERE parcelid = %s""", (id, ))
         row = self.cursor.fetchone()
         self.db.close()
@@ -69,6 +74,7 @@ class Parcel(object):
                      sender, recipient, status, price, userid)\
                       FROM Parcels_table WHERE userid = %s""", (userid, ))
         row = self.cursor.fetchall()
+        
         self.db.close()
         return row
     
@@ -76,12 +82,11 @@ class Parcel(object):
         """Cancel pending order."""
         sql = """UPDATE Parcels_table SET status = %s WHERE parcelid = %s"""
         val = ("Canceled", parcelid)
-        
         try:
             self.cursor.execute(sql, val)
             self.db.commit()
-            self.cursor.execute("""SELECT (parcelid, weight, destination,
-                    sender, recipient, status, price, userid) FROM Parcels_table
+            self.cursor.execute("""SELECT parcelid, weight, destination,
+                    sender, recipient, status, price, userid FROM Parcels_table
                     WHERE parcelid = %s""", (parcelid, ))
             rows = self.cursor.fetchone()
             self.db.close()
@@ -97,15 +102,13 @@ class Parcel(object):
         """Cancel pending order."""
         sql = """UPDATE Parcels_table SET destination = %s WHERE parcelid = %s"""
         val = (destination, parcelid)
-
-        
         try:
             self.cursor.execute(sql, val)
             self.db.commit()
-            self.cursor.execute("""SELECT (parcelid, weight, destination,
-                    sender, recipient, status, price, userid) FROM Parcels_table
-                    WHERE parcelid = %s""", (parcelid, ))
+            self.cursor.execute("""SELECT parcelid, userid, destination, weight,
+             price, status FROM Parcels_table WHERE parcelid = %s""", (parcelid, ))
             rows = self.cursor.fetchone()
+            
             self.db.close()
             return rows
             

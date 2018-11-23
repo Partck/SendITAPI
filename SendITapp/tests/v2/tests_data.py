@@ -88,12 +88,12 @@ incorrect_status = {
             "userid": "2"}
 
 data_login = {
-"email": "patrick@mail.com",
+"email": "demo@mail.com",
 "password": "qwerty"
 }
 
 data_register = {
                     "username": "",
-                    "name": "Pit Pat", "email": "patrick@mail.com", "role": "Admin",
-                    "phone": "0716904050", "password": "qwerty", "retype_password": "qwerty"
+                    "name": "Patrick", "email": "demo@mail.com", "role": "Admin",
+                    "phone": "0716954050", "password": "qwerty", "retype_password": "qwerty"
  }
