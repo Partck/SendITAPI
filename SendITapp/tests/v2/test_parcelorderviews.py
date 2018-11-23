@@ -35,8 +35,8 @@ class TestParcelViews(unittest.TestCase):
         response = self.app.post(
             "/api/v2/register",
             data=json.dumps(self.data),
-            headers=dict(Authorization=""),
-            content_type='application/json;charset=utf-8')
+            
+            content_type='application/json', headers=self.token)
 
         resp_data = json.loads(response.get_data(as_text=True))
         assert response.status_code == 200

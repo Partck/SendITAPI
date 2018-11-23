@@ -18,6 +18,13 @@ class Register(Resource):
 
         if not data:
             return "Please fill in the fields"
+        
+        username = data["username"].strip()
+        if not (re.match("^[a-zA-Z0-9_]*$", username)):
+            message = 'Incorrect username.'
+            payload = {"Status": "Failed", "Message": message}
+            return make_response(jsonify(payload), 400)
+
         if data['username'] == "":
             message = 'Check your username'
             payload = {"Status": "Failed", "Message": message}
@@ -25,6 +32,12 @@ class Register(Resource):
 
         if data['name'] == "":
             message = 'Enter your name'
+            payload = {"Status": "Failed", "Message": message}
+            return make_response(jsonify(payload), 400)
+        
+        name = data["name"].strip()
+        if not (re.match("^[a-zA-Z0-9_]*$", name)):
+            message = 'Check your name.'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
              
@@ -37,6 +50,18 @@ class Register(Resource):
             message = 'Enter your password.'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
+        
+        password = data["password"].strip()
+        if not (re.match("^[a-zA-Z0-9_]*$", password)):
+            message = 'Check your password.'
+            payload = {"Status": "Failed", "Message": message}
+            return make_response(jsonify(payload), 400)
+        
+        retype_password = data["password"].strip()
+        if not (re.match("^[a-zA-Z0-9_]*$", retype_password)):
+            message = 'Check your password(s).'
+            payload = {"Status": "Failed", "Message": message}
+            return make_response(jsonify(payload), 400)
 
         if data['password'] != data["retype_password"]:
             message = 'Passwords do not match.'
@@ -47,7 +72,8 @@ class Register(Resource):
             message = 'Role input can either be Admin or User'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
-                
+        
+        
         if data['phone'] == "":
             message = 'Enter a valid number.'
             payload = {"Status": "Failed", "Message": message}
