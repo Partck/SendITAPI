@@ -11,13 +11,6 @@ install:
 
 before_script:
  - export PYTHONPATH=`pwd`
- -psql -c CREATE DATABASE test_senditdb -U sendit_user
-- psql -c "ALTER USER sendit_user WITH PASSWORD 'qwertys';" -U sendit_user
-
-env:
- - TEST_DB_URI="dbname='test_senditdb' user='sendit_user' host='localhost' password='qwerty'"
-
-
 # command to run tests
 script: 
  - pytest --cov=SendITapp

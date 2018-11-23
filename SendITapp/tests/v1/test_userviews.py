@@ -41,12 +41,6 @@ class TestUserViews(unittest.TestCase):
                     "name": "Pit Pat", "email": "pat@mail.com", "role": "admin",
                     "phone": "0712304050", "password": "qwerty", "retype_password": "qwerty"
                     }
-            #login data sample
-        self.login =    {
-                "email": "pat@mail.com",
-                "password": "qwerty"
-                }
-
 
     def test_create_user_with_correct_mail(self):
         """ Test create a new parcel order. """
@@ -61,7 +55,7 @@ class TestUserViews(unittest.TestCase):
         response1 = self.app.post('/api/v1/users',
         data=json.dumps(self.data1), content_type='application/json')
         result = json.loads(response1.data)
-        self.assertIn('Check your usename', str(result))
+        self.assertIn('Check your name and usename', str(result))
         self.assertEqual(response1.status_code, 400, msg="BAD REQUEST")
 
     def test_create_user_with_empty_name(self):
@@ -69,7 +63,7 @@ class TestUserViews(unittest.TestCase):
         response2 = self.app.post('/api/v1/users',
         data=json.dumps(self.data2), content_type='application/json')
         result = json.loads(response2.data)
-        self.assertIn('Enter your name', str(result))
+        self.assertIn('Check your name and usename', str(result))
         self.assertEqual(response2.status_code, 400, msg="BAD REQUEST")
 
     def test_create_user_with_incorrect_email(self):
@@ -83,7 +77,7 @@ class TestUserViews(unittest.TestCase):
     def test_create_user_with_incorrect_role(self):
         """ Test create a new parcel order. """
         response4 = self.app.post('/api/v1/users',
-         data=json.dumps(self.data4),content_type='application/json')
+         data=json.dumps(self.data4), content_type='application/json')
         result = json.loads(response4.data)
         self.assertIn('Role input can either be Admin or User', str(result))
         self.assertEqual(response4.status_code, 400, msg="BAD REQUEST")
@@ -102,13 +96,11 @@ class TestUserViews(unittest.TestCase):
         result = json.loads(response.data)
         # print(result["User"]["username"])
         
-        
+        self.assertIn('pat@mail.com', str(result))
         response1 = self.app.get("/api/v1/users/10")
         
         result = json.loads(response1.data)
         assert response1.status_code == 404
         self.assertIn('User does not exist!', str(result))
-
-
 
     

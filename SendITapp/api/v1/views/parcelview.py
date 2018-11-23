@@ -2,90 +2,62 @@
 from flask import request, make_response, jsonify
 from flask_restful import Resource
 from SendITapp.api.v1.models.parcel import Parcel
-import re
 
 class AllParcels(Resource):
     """Class to handle parcel views."""
 
     def get(self):
         """Method to get all the parcels available in the system."""
-        parcel = Parcel()
-        all_parcels = parcel.get_all()
+        par1 = Parcel()
+        all_parcels = par1.get_all()
 
         payload = {
             "Status": "OK.",
             "Parcels": all_parcels
         }
-        
-        return make_response(jsonify(payload), 200)
+        answ = make_response(jsonify(payload), 200)
+        return answ
 
     def post(self):
         """Method to create a parcel order. It uses the POST method"""
         data = request.get_json() or {}
         """Check email validation."""            
-        sender = data["sender"].strip()
-        if not (re.match("^[a-zA-Z0-9_]*$", sender)):
-            message = 'Incorrect input in sender'
+        if data['sender'] == "" or data['sender'].isalpha()==False:
+            message = 'Please confirm the sender'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answ = make_response(jsonify(payload), 400)
+            return answ
 
-        if data["sender"] == "":
-            message = 'Enter the sender'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-            
-        recipient = data["recipient"].strip()
-        
-        if not (re.match("^[a-zA-Z0-9_]*$", recipient)):
-            message = 'Check the recipient.'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-        
-        destination = data["destination"].strip()
-        if not (re.match("^[a-zA-Z0-9_]*$", destination)):
-            message = 'Check the destination.'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-
-        if data["destination"] == "":
-            message = 'Enter the destination'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-            
-        if data["recipient"] == "":
-            message = 'Enter the recipient'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
     
-        weight = data["weight"].strip()
-        price_status = ["Paid", "Not Paid"]
-        if data['price'] not in price_status:
-            message = 'Price status is: Paid or Not Paid.'
+        if data['destination'] == "" or data['recipient'] == ""\
+        or data['recipient'].isalpha()== False or data['destination'].isalpha()==False:
+            message = 'Check your details. Destination, Recipient...'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-            
-        if not (re.match("^[a-zA-Z0-9_]*$", weight)):
-            message = 'Incorrect weight format.'
+            answ = make_response(jsonify(payload), 400)
+            return answ
+
+    
+        if data['price'] == "" or data['weight'] == "":
+            message = 'Kindly confirm the wight and pricing of your package'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-            
-        if data["weight"] == "":
-            message = 'Enter the weight'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-            
+            answ = make_response(jsonify(payload), 400)
+            return answ
     
         accepted=["Pending","Canceled","Delivered"]
-        if data["status"] not in accepted:
+        if data['status'] not in accepted:
                 message = 'Status can only be Pending, Delivered or Canceled'
                 payload = {"Status": "Failed", "Message": message, "Data": data['status']}
-                return make_response(jsonify(payload), 400)
-        parcel = Parcel()
-        parcel.create_parcel(data)
+                answ = make_response(jsonify(payload), 400)
+                return answ
+
+        par1 = Parcel()
+        par1.create_parcel(data["destination"], data["recipient"], data["sender"],
+        data["weight"], data["price"], data["status"])
 
         payload = {"Status": "Created.....Your order is on its way", "Parcel": data}
-        return make_response(jsonify(payload), 200)
-        
+        answ = make_response(jsonify(payload), 200)
+        return answ
+
 
 class SingleParcel(Resource):
     """Single parcel class."""
@@ -99,11 +71,13 @@ class SingleParcel(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            return make_response(jsonify(reply), 200)
+            answ = make_response(jsonify(reply), 200)
+            return answ
         else:
             pack = {"Status": "Not Found!!", "id": parcelid}
-            return make_response(jsonify(pack), 404)
-            
+            answ = make_response(jsonify(pack), 404)
+            return answ
+
 
 class ParcelsByUser(Resource):
     """Parcel by user."""
@@ -117,13 +91,13 @@ class ParcelsByUser(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            return make_response(jsonify(reply), 200)
+            answ = make_response(jsonify(reply), 200)
             
-            
+            return answ
         else:
             reply = {"Status": "No parcel!"}
-            return make_response(jsonify(reply), 404)
-            
+            answ = make_response(jsonify(reply), 404)
+            return answ
 
 
 class UpdateOrder(Resource):
@@ -134,35 +108,28 @@ class UpdateOrder(Resource):
         if data['sender'] == "":
             message = 'Please confirm the sender'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answ = make_response(jsonify(payload), 400)
+            return answ
+
     
-        if data['destination'] == "":
-            message = 'Enter the destination'
+        if data['destination'] == "" or data['recipient'] == "":
+            message = 'Check your details. Destination, Recipient...'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answ = make_response(jsonify(payload), 400)
+            return answ
 
-        price_status = ["Paid", "Not Paid"]
-        if data['price'] not in price_status:
-            message = 'Price status is: Paid or Not Paid.'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-
-        if data['recipient'] == "":
-            message = 'Enter the recipient'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-       
-        if data['weight'] == "":
+    
+        if data['price'] == "" or data['weight'] == "":
             message = 'Kindly confirm the wight and pricing of your package'
-            payload = {"Status": "Failed", "Message": message, "Parcel": data}
-            return make_response(jsonify(payload), 400)
-             
+            payload = {"Status": "Package status update failed", "Message": message, "Parcel": data}
+            answ = make_response(jsonify(payload), 400)
+            return answ
     
         if data['status'] == "":
             message = 'Kindly update the status of this package'
-            payload = {"Status": "Failed", "Message": message, "Parcel": data}
-            return make_response(jsonify(payload), 400)
-            
+            payload = {"Status": "Package status update failed", "Message": message, "Parcel": data}
+            answ = make_response(jsonify(payload), 400)
+            return answ
 
         parcelid = str(parcelid)
         for item in Parcel.parcels:
@@ -175,8 +142,8 @@ class UpdateOrder(Resource):
                 item["destination"] = data["destination"]
 
         payload = {"Status": "Order Updated"}
-        return make_response(jsonify(payload), 200)
-        
+        answ = make_response(jsonify(payload), 200)
+        return answ
 
 
 class CancelParcelOrder(Resource):
@@ -188,5 +155,5 @@ class CancelParcelOrder(Resource):
             if item['id'] == parcelid:
                 item["status"] = "Canceled"
         payload = {"Status": "Parcel Canceled!"}
-        return make_response(jsonify(payload), 200)
-        
+        answ = make_response(jsonify(payload), 200)
+        return answ
