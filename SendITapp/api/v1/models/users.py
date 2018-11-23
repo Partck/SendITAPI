@@ -7,15 +7,15 @@ class UserModel(object):
     '''
     user_data = []
 
-    def create_user(self, username, name, email, role, phone, password):
+    def create_user(self, data):
         '''This method allows the admin to create a user'''
 
-        self.username = username
-        self.name = name
-        self.role = role
-        self.email = email
-        self.phone = phone
-        self.password = password
+        self.username = data["username"]
+        self.name = data["name"]
+        self.role = data["role"]
+        self.email = data["email"]
+        self.phone = data["phone"]
+        self.password = data["password"]
 
         # Validate common user data.
         for user in UserModel.user_data:
