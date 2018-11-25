@@ -38,16 +38,13 @@ class UserModel(object):
       
     def get_all(self):
         """This method returns all users in the system."""
-        self.cursor.execute("""SELECT role FROM Users_table WHERE
-                     email = %s""", (self.user, ))
-        user = self.cursor.fetchone()
-        if user["role"] == "Admin":
-            self.cursor.execute("""SELECT name, username,
+
+        self.cursor.execute("""SELECT userid, name, username,
                      phone, role, email FROM Users_table""")
-            rows = self.cursor.fetchall()
-            self.db.close()
-            return rows
-        return "You are not Admin"
+        rows = self.cursor.fetchall()
+        self.db.close()
+        return rows
+        
         
         
     

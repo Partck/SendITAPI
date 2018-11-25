@@ -87,13 +87,14 @@ class AllParcels(Resource):
         parcel = Parcel()
         response = parcel.create_parcel(data)
         if response == str():
-            return response
+            return "Not saved"
+        
         if response:
             payload = {"Status": "Created.....Your order is on its way", "Parcel": response}
             return make_response(jsonify(payload), 200)
-        payload = {"Status": "Failed", "Parcel": response}
-        return make_response(jsonify(payload), 200)    
-
+        
+        
+        return "Failed"
 
         
         

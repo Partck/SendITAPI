@@ -70,8 +70,8 @@ class Parcel(object):
 
     def get_parcels_by_user(self, userid):
         """Get parcels by user."""
-        self.cursor.execute("""SELECT (parcelid, weight, destination,\
-                     sender, recipient, status, price, userid)\
+        self.cursor.execute("""SELECT parcelid, weight, destination,\
+                     sender, recipient, status, price, userid\
                       FROM Parcels_table WHERE userid = %s""", (userid, ))
         row = self.cursor.fetchall()
         

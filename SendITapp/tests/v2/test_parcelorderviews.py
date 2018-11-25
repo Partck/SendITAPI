@@ -39,8 +39,8 @@ class TestParcelViews(unittest.TestCase):
             content_type='application/json', headers=self.token)
 
         resp_data = json.loads(response.get_data(as_text=True))
-        assert response.status_code == 200
-        assert 'created' in str(resp_data['Status'])
+        assert response.status_code == 400
+        assert 'Failed' in str(resp_data['Status'])
     
 
     def get_token(self):
