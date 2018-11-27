@@ -3,6 +3,7 @@
 from ... import create_app
 import unittest
 import json
+from instance.config import config
 # from SendITapp.tests.v2.test_parcelorderviews import TestParcelViews
 
 
@@ -12,7 +13,7 @@ class TestUserViews(unittest.TestCase):
 
     def setUp(self):
         create_app().testing = True
-        self.app = create_app().test_client()
+        self.app = create_app(config_class=config["test"]).test_client()
         self.data = {
                     "username": "pato",
                     "name": "Pit Pat", "email": "patf@mail.com", "role": "Admin",

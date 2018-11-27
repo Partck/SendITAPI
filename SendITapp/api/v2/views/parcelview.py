@@ -27,6 +27,7 @@ class AllParcels(Resource):
         data = request.get_json() or {}
         if not data:
             return "please fill the fields"
+   
         sender = data["sender"].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", sender)):
             message = 'Incorrect input in sender'
@@ -37,8 +38,9 @@ class AllParcels(Resource):
             message = 'Enter the sender'
             payload = {"Status": "Failed", "Message": message}
             return make_response(jsonify(payload), 400)
-        
+            
         recipient = data["recipient"].strip()
+        
         if not (re.match("^[a-zA-Z0-9_]*$", recipient)):
             message = 'Check the recipient.'
             payload = {"Status": "Failed", "Message": message}
@@ -86,15 +88,11 @@ class AllParcels(Resource):
                 
         parcel = Parcel()
         response = parcel.create_parcel(data)
-        if response == str():
-            return "Not saved"
-        
-        if response:
-            payload = {"Status": "Created.....Your order is on its way", "Parcel": response}
-            return make_response(jsonify(payload), 200)
-        
-        
-        return "Failed"
+        if not response:
+            payload = {"Status": "Not saved"}
+            return make_response(jsonify(payload), 400)    
+        payload = {"Status": "Created", "Parcel": response}
+        return make_response(jsonify(payload), 200)
 
         
         
@@ -110,7 +108,7 @@ class SingleParcel(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            return make_response(jsonify(reply), 200)
+            return make_response(reply, 200)
             
         else:
             pack = {"Status": "Not Found!!", "id": parcelid}
@@ -128,7 +126,7 @@ class ParcelsByUser(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            return make_response(jsonify(reply), 200)
+            return make_response(reply, 200)
             
         else:
             reply = {"Status": "No parcel!"}
@@ -142,17 +140,6 @@ class UpdateOrder(Resource):
         """This method uses the PUT method to cancel a request."""
         data = request.get_json() or {}
             
-        sender = data["sender"].strip()
-        if not (re.match("^[a-zA-Z0-9_]*$", sender)):
-            message = 'Please confirm the sender'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-
-        if data["sender"] == "":
-            message = 'Enter the sender'
-            payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
-     
         recipient = data["recipient"].strip()
         
         if not (re.match("^[a-zA-Z0-9_]*$", recipient)):

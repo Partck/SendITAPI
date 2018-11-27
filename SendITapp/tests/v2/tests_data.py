@@ -88,12 +88,18 @@ incorrect_status = {
             "userid": "2"}
 
 data_login = {
-"email": "demo@mail.com",
+"email": "dell33@mail.com",
 "password": "qwerty"
 }
 
 data_register = {
-                    "username": "",
-                    "name": "Patrick", "email": "demo@mail.com", "role": "Admin",
-                    "phone": "0716954050", "password": "qwerty", "retype_password": "qwerty"
+                    "username": "Njogu",
+                    "name": "Patrick", "email": "dell33@mail.com", "role": "Admin",
+                    "phone": "0719954120", "password": "qwerty", "retype_password": "qwerty"
  }
+
+data_register2 = {
+                    "username": "Njgou",
+                    "name": "Pit Pat", "email": "dec39@mail.com", "role": "Admin",
+                    "phone": "0719984151", "password": "qwerty", "retype_password": "qwerty"
+                    }

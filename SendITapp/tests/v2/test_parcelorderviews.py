@@ -9,7 +9,7 @@ import pytest
 from instance.config import config
 from SendITapp.tests.v2.tests_data import incorrect_sender, missing_sender, data,\
  missing_destination, incorrect_recipient, missing_recipient, missing_weight,\
-  incorrect_weight, incorrect_status, data_login, data_register
+  incorrect_weight, incorrect_status, data_login, data_register, data_register2
 
 
 
@@ -20,31 +20,13 @@ class TestParcelViews(unittest.TestCase):
         """Function tests creating a parcel with incomplete data."""
         
         self.app = create_app(config_class=config["test"]).test_client()
-        self.data = {
-                    "username": "pato",
-                    "name": "Pit Pat", "email": "deo32@mail.com", "role": "Admin",
-                    "phone": "0713984050", "password": "qwerty", "retype_password": "qwerty"
-                    }
+        
         self.token = self.get_token()
                     
         
-    
-    def test_register(self):
-        """ Tests create a new parcel order """
-
-        response = self.app.post(
-            "/api/v2/register",
-            data=json.dumps(self.data),
-            
-            content_type='application/json', headers=self.token)
-
-        resp_data = json.loads(response.get_data(as_text=True))
-        assert response.status_code == 400
-        assert 'Failed' in str(resp_data['Status'])
-    
-
+  
     def get_token(self):
-        self.app.post('/api/v1/register', 
+        self.app.post('/api/v2/register', 
         data=json.dumps(data_register), content_type='application/json')
         response = self.app.post('/api/v2/login', data=json.dumps(data_login),
                                 content_type='application/json')
@@ -58,7 +40,7 @@ class TestParcelViews(unittest.TestCase):
                                data=json.dumps(data),
                                content_type='application/json', headers=self.token)
         output = json.loads(res.data)
-        self.assertEqual(output['Status'], "Created.....Your order is on its way")
+        self.assertEqual(output['Status'], "Created")
         assert res.status_code == 200
 
 
@@ -80,23 +62,16 @@ class TestParcelViews(unittest.TestCase):
 
     def test_create_order_with_missing_destination(self):
         """Function tests creating a parcel with incomplete data."""
-        response = self.app.post('/api/v1/parcels', 
+        response = self.app.post('/api/v2/parcels', 
         data=json.dumps(missing_destination), content_type='application/json', headers=self.token)
         result = json.loads(response.data)
         self.assertIn('Enter the destination',str(result))
         self.assertEqual(response.status_code, 400, msg="BAD REQUEST")
-    
-    def test_update_parcel(self):
-        """Function tests updating a parcel."""
-        response = self.app.patch('/api/v1/parcels/1/update', 
-        data=json.dumps(data), content_type='application/json', headers=self.token)
-        result = json.loads(response.data)
-        self.assertIn('Order Updated', str(result))
-        self.assertEqual(response.status_code, 200, msg="OK")
+
     
     def test_update_parcel_missing_destination(self):
         """Function tests updating a parcel with incomplete data."""
-        response1 = self.app.patch('/api/v1/parcels/1/update', 
+        response1 = self.app.patch('/api/v2/parcels/1/update', 
         data=json.dumps(missing_destination), content_type='application/json', headers=self.token)
         result = json.loads(response1.data)
         self.assertEqual(response1.status_code, 400, msg="OK")
@@ -105,7 +80,7 @@ class TestParcelViews(unittest.TestCase):
     
     def test_create_order_with_incorrect_recipient(self):
         """Function tests creating a parcel with incomplete data."""
-        response = self.app.post('/api/v1/parcels', 
+        response = self.app.post('/api/v2/parcels', 
         data=json.dumps(incorrect_recipient), content_type='application/json', headers=self.token)
         result = json.loads(response.data)
         self.assertIn('Check the recipient.',str(result))
@@ -114,7 +89,7 @@ class TestParcelViews(unittest.TestCase):
 
     def test_create_order_with_missing_recipient(self):
         """Function tests creating a parcel with incomplete data."""
-        response = self.app.post('/api/v1/parcels', 
+        response = self.app.post('/api/v2/parcels', 
         data=json.dumps(missing_recipient), content_type='application/json', headers=self.token)
         result = json.loads(response.data)
         self.assertIn('Enter the recipient',str(result))
@@ -122,7 +97,7 @@ class TestParcelViews(unittest.TestCase):
     
     def test_create_order_with_missing_weight(self):
         """Function tests creating a parcel with incomplete data."""
-        response = self.app.post('/api/v1/parcels', 
+        response = self.app.post('/api/v2/parcels', 
         data=json.dumps(missing_weight), content_type='application/json', headers=self.token)
         result = json.loads(response.data)
         self.assertIn('Enter the weight',str(result))
@@ -130,7 +105,7 @@ class TestParcelViews(unittest.TestCase):
     
     def test_create_order_with_incorrect_weight(self):
         """Function tests creating a parcel with incomplete data."""
-        response = self.app.post('/api/v1/parcels', 
+        response = self.app.post('/api/v2/parcels', 
         data=json.dumps(incorrect_weight), content_type='application/json', headers=self.token)
         result = json.loads(response.data)
         self.assertIn('Incorrect weight format.',str(result))
@@ -138,7 +113,7 @@ class TestParcelViews(unittest.TestCase):
 
     def test_create_order_with_incorrect_status(self):
         """Function tests creating a parcel with incomplete data."""
-        response = self.app.post('/api/v1/parcels', 
+        response = self.app.post('/api/v2/parcels', 
         data=json.dumps(incorrect_status), content_type='application/json', headers=self.token)
         result = json.loads(response.data)
         self.assertIn('Price status is: Paid or Not Paid.',str(result))

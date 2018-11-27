@@ -17,23 +17,23 @@ class Parcel(object):
         """Create parcel order. It stores data in a data list."""
         self.destination = data["destination"]
         self.recipient = data["recipient"]
-        self.sender = data["sender"]
+        
         self.weight = data["weight"]
         self.price = data["price"]
         self.status = data["status"]
         
         id1 = str(uuid.uuid4())
         try:
-            self.cursor.execute("""SELECT (userid) FROM Users_table WHERE
-                     email = %s""", (self.user, ))
+            self.cursor.execute("""SELECT userid FROM Users_table WHERE
+                     email = %s""", (self.user["email"], ))
             userid = self.cursor.fetchone()
             self.cursor.execute("""INSERT INTO Parcels_table (parcelid, weight, destination,\
-                     sender, recipient, status, price, userid) VALUES
+                     recipient, status, price, userid) VALUES
                      (%s, %s, %s, %s, %s, %s, %s, %s )""", (id1, self.weight,
-                        self.destination, self.sender,
+                        self.destination,
                     self.recipient, self.status, self.price, userid["userid"]))
             self.db.commit()
-            self.cursor.execute("""SELECT parcelid, userid, sender, destination,\
+            self.cursor.execute("""SELECT parcelid, userid, destination,\
          weight, price, status FROM Parcels_table\
                     WHERE parcelid = %s""", (id1, ))
             parcel_orders = self.cursor.fetchone()
@@ -45,16 +45,11 @@ class Parcel(object):
             if self.db is not None:
                 self.db.close()
 
-
-
-
-
-
        
 
     def get_all(self):
         """This method returns all parcels in the system."""
-        self.cursor.execute("""SELECT parcelid, userid, sender, destination, 
+        self.cursor.execute("""SELECT parcelid, userid, destination, 
         weight, price, status FROM Parcels_table""")
         parcel_orders = self.cursor.fetchall()               
         return parcel_orders
@@ -62,7 +57,7 @@ class Parcel(object):
     def get_one_parcel(self, id):
         """Get one parcel."""
         self.cursor.execute("""SELECT parcelid, weight, destination,\
-                     sender, recipient, status, price, userid\
+                      recipient, status, price, userid\
                       FROM Parcels_table WHERE parcelid = %s""", (id, ))
         row = self.cursor.fetchone()
         self.db.close()
@@ -71,7 +66,7 @@ class Parcel(object):
     def get_parcels_by_user(self, userid):
         """Get parcels by user."""
         self.cursor.execute("""SELECT parcelid, weight, destination,\
-                     sender, recipient, status, price, userid\
+                      recipient, status, price, userid\
                       FROM Parcels_table WHERE userid = %s""", (userid, ))
         row = self.cursor.fetchall()
         
@@ -86,7 +81,7 @@ class Parcel(object):
             self.cursor.execute(sql, val)
             self.db.commit()
             self.cursor.execute("""SELECT parcelid, weight, destination,
-                    sender, recipient, status, price, userid FROM Parcels_table
+                    recipient, status, price, userid FROM Parcels_table
                     WHERE parcelid = %s""", (parcelid, ))
             rows = self.cursor.fetchone()
             self.db.close()

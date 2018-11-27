@@ -41,8 +41,8 @@ class DbConfig:
         userid VARCHAR (256) PRIMARY KEY,
         name  VARCHAR (256) NOT NULL,
         role VARCHAR (256) NOT NULL DEFAULT 'user',
-        email VARCHAR (256) NOT NULL UNIQUE,
-        phone VARCHAR (256) NOT NULL UNIQUE,
+        email VARCHAR (256) NOT NULL,
+        phone VARCHAR (256) NOT NULL,
         password VARCHAR (256) NOT NULL,
         username VARCHAR (256) NOT NULL
         );
@@ -53,7 +53,7 @@ class DbConfig:
         parcelid VARCHAR (256) PRIMARY KEY,
         weight VARCHAR (256) NOT NULL,
         destination VARCHAR (256) NOT NULL,
-        sender VARCHAR (256) NOT NULL,
+        
         recipient VARCHAR (256) NOT NULL,
         status VARCHAR (256) NOT NULL DEFAULT 'Pending Delivery',
         price VARCHAR (256) NOT NULL,
