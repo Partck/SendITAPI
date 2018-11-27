@@ -15,43 +15,57 @@ class User(Resource):
         if data['username'] == "":
             message = 'Check your usename'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
 
         if data['name'] == "":
             message = 'Enter your name'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
     
         if data["email"].find("@") < 2:
             message = 'Incorrect email format'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)           
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer           
 
     
         if data['password'] == "":
             message = 'Enter your password.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
 
         if data['password'] != data["retype_password"]:
             message = 'Passwords do not match.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
 
     
         if data['role'] != "Admin"and data["role"] != "User":
             message = 'Role input can either be Admin or User'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
 
     
         if data['phone'] == "":
             message = 'Enter a valid number.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
 
         
@@ -60,11 +74,15 @@ class User(Resource):
         if reply_info:
             payload = {"Status": "User Registered",
             "User": reply_info}
-            return make_response(jsonify(payload), 200)
+            answer = make_response(jsonify(payload),200)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
 
         payload = {"Status": "Failed", "Message": reply_info}
-        return make_response(jsonify(payload), 400)
+        answer = make_response(jsonify(payload),400)
+        answer.content_type='application/json;charset=utf-8'
+        return answer
         
 
     def get(self):
@@ -76,7 +94,9 @@ class User(Resource):
             "Status": "Ok",
             "Users": all_users
         }
-        return make_response(jsonify(payload), 200)
+        answer = make_response(jsonify(payload),200)
+        answer.content_type='application/json;charset=utf-8'
+        return answer
 
 
 class SingleUser(Resource):

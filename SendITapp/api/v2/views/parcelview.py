@@ -18,7 +18,9 @@ class AllParcels(Resource):
             "Status": "OK.",
             "Parcels": all_parcels
         }
-        return make_response(jsonify(payload), 200)
+        answer = make_response(jsonify(payload),200)
+        answer.content_type='application/json;charset=utf-8'
+        return answer
         
 
     @jwt_required
@@ -32,67 +34,91 @@ class AllParcels(Resource):
         if not (re.match("^[a-zA-Z0-9_]*$", sender)):
             message = 'Incorrect input in sender'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
 
         if data["sender"] == "":
             message = 'Enter the sender'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         recipient = data["recipient"].strip()
         
         if not (re.match("^[a-zA-Z0-9_]*$", recipient)):
             message = 'Check the recipient.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
         
         destination = data["destination"].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", destination)):
             message = 'Check the destination.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
 
         if data["destination"] == "":
             message = 'Enter the destination'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         if data["recipient"] == "":
             message = 'Enter the recipient'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
     
         weight = data["weight"].strip()
         price_status = ["Paid", "Not Paid"]
         if data['price'] not in price_status:
             message = 'Price status is: Paid or Not Paid.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         if not (re.match("^[a-zA-Z0-9_]*$", weight)):
             message = 'Incorrect weight format.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         if data["weight"] == "":
             message = 'Enter the weight'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
     
         accepted=["Pending","Canceled","Delivered"]
         if data["status"] not in accepted:
                 message = 'Status can only be Pending, Delivered or Canceled'
                 payload = {"Status": "Failed", "Message": message, "Data": data['status']}
-                return make_response(jsonify(payload), 400)
+                answer = make_response(jsonify(payload),400)
+                answer.content_type='application/json;charset=utf-8'
+                return answer
                 
         parcel = Parcel()
         response = parcel.create_parcel(data)
         if not response:
             payload = {"Status": "Not saved"}
-            return make_response(jsonify(payload), 400)    
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer    
         payload = {"Status": "Created", "Parcel": response}
-        return make_response(jsonify(payload), 200)
+        answer = make_response(jsonify(payload),200)
+        answer.content_type='application/json;charset=utf-8'
+        return answer
 
         
         
@@ -145,47 +171,63 @@ class UpdateOrder(Resource):
         if not (re.match("^[a-zA-Z0-9_]*$", recipient)):
             message = 'Check the recipient.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         destination = data["destination"].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", destination)):
             message = 'Enter the destination.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         if data["destination"] == "":
             message = 'Enter the destination'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
         
         if data["recipient"] == "":
             message = 'Enter the recipient'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
         
         price_status = ["Paid", "Not Paid"]
         if data['price'] not in price_status:
             message = 'Price status is: Paid or Not Paid.'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         weight = data["weight"].strip()    
         if not (re.match("^[a-zA-Z0-9_]*$", weight)):
             message = 'Incorrect weight format'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         if data["weight"] == "":
             message = 'Enter the weight'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
     
         accepted=["Pending","Canceled","Delivered"]
         if data["status"] not in accepted:
                 message = 'Status can only be Pending, Delivered or Canceled'
                 payload = {"Status": "Failed", "Message": message, "Data": data['status']}
-                return make_response(jsonify(payload), 400)
+                answer = make_response(jsonify(payload),400)
+                answer.content_type='application/json;charset=utf-8'
+                return answer
                 
         parcelid = str(parcelid)
         pass
@@ -215,7 +257,9 @@ class UpdateDestinationOrder(Resource):
         if not (re.match("^[a-zA-Z0-9_]*$", destination)):
             message = 'Please confirm the sender'
             payload = {"Status": "Failed", "Message": message}
-            return make_response(jsonify(payload), 400)
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
 
         parcelid = str(parcelid)
         parcel = Parcel()
@@ -223,3 +267,10 @@ class UpdateDestinationOrder(Resource):
         if query_result:
             return query_result
         return "No parcel found!"
+
+
+
+
+        answer = make_response(jsonify(payload),400)
+        answer.content_type='application/json;charset=utf-8'
+        return answer
