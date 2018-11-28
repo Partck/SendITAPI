@@ -81,23 +81,3 @@ class TestUserViews(unittest.TestCase):
         result = json.loads(response4.data)
         self.assertIn('Check your name.', str(result))
         self.assertEqual(response4.status_code, 400, msg="BAD REQUEST")
-
-    def test_get_all_users(self):
-        """ This function tests getting of all users."""
-        response = self.app.get("/api/v2/users")
-        
-        assert response.status_code == 401
-        
-
-    def test_get_single_user(self):
-        """This function tests for getting one user."""
-              
-        response1 = self.app.get("/api/v2/users/10")
-        
-        
-        assert response1.status_code == 401
-        
-
-
-
-    
