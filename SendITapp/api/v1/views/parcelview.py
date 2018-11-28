@@ -1,4 +1,4 @@
-"""Install relevant packages."""
+"""Installs relevant packages."""
 from flask import request, make_response, jsonify
 from flask_restful import Resource
 from SendITapp.api.v1.models.parcel import Parcel
