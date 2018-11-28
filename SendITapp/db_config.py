@@ -4,8 +4,6 @@ class DbConfig:
     def __init__(self):
         self.url = os.getenv("URL")
               
-
-
     def connection(self, url):
         con = psycopg2.connect(url)
         return con
