@@ -3,6 +3,7 @@
 from ... import create_app
 import unittest
 import json
+from instance.config import config
 
 
 class TestUserViews(unittest.TestCase):
@@ -11,7 +12,7 @@ class TestUserViews(unittest.TestCase):
 
     def setUp(self):
         create_app().testing = True
-        self.app = create_app().test_client()
+        self.app = create_app(config_class=config["test"]).test_client()
         self.data = {
                     "username": "pato",
                     "name": "Pit Pat", "email": "pat@mail.com", "role": "Admin",
@@ -95,19 +96,6 @@ class TestUserViews(unittest.TestCase):
         assert response.status_code == 200
         self.assertIn('Ok', str(result))
 
-    def test_get_single_user(self):
-        """This function tests for getting one user."""
-        response = self.app.post('/api/v1/users', data=json.dumps(self.data),
-        content_type='application/json;charset=utf-8')
-        result = json.loads(response.data)
-        # print(result["User"]["username"])
-        
-        
-        response1 = self.app.get("/api/v1/users/10")
-        
-        result = json.loads(response1.data)
-        assert response1.status_code == 404
-        self.assertIn('User does not exist!', str(result))
 
 
 

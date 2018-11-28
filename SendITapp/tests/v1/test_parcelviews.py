@@ -4,6 +4,7 @@ from ... import create_app
 import unittest
 from flask import Flask
 import json
+from instance.config import config
 from SendITapp.tests.v1.test_data import incorrect_sender, missing_sender, data,\
  missing_destination, incorrect_recipient, missing_recipient, missing_weight,\
   incorrect_weight, incorrect_status
@@ -15,7 +16,8 @@ class TestParcelViews(unittest.TestCase):
     def setUp(self):
         """Function tests creating a parcel with incomplete data."""
         create_app().testing = True
-        self.app = create_app().test_client()
+        
+        self.app = create_app(config_class=config["test"]).test_client()
 
 
     def test_create_parcel_order(self):
