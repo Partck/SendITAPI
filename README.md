@@ -1,6 +1,7 @@
 ## By Partck 2018
 
-[![Build Status](https://travis-ci.org/Partck/SendITAPI.svg?branch=develop)](https://travis-ci.org/Partck/SendITAPI) [![Coverage Status](https://coveralls.io/repos/github/Partck/SendITAPI/badge.svg?branch=develop)](https://coveralls.io/github/Partck/SendITAPI?branch=develop)
+[![Build Status](https://travis-ci.org/Partck/SendITAPI.svg?branch=develop)](https://travis-ci.org/Partck/SendITAPI) [![Coverage Status](https://coveralls.io/repos/github/Partck/SendITAPI/badge.svg?branch=develop)](https://coveralls.io/github/Partck/SendITAPI?branch=develop)[![Maintainability](https://api.codeclimate.com/v1/badges/981768bd757f1386b352/maintainability)](https://codeclimate.com/github/Partck/SendITAPI/maintainability)[![Test Coverage](https://api.codeclimate.com/v1/badges/981768bd757f1386b352/test_coverage)](https://codeclimate.com/github/Partck/SendITAPI/test_coverage)
+
 
  **SendIT** is a service that helps users track the parcel delivery orders
 
