@@ -1,7 +1,7 @@
 from flask import request, make_response, jsonify
 from flask_restful import Resource
 from SendITapp.api.v1.models.users import UserModel
-import bcrypt
+
 
 
 class User(Resource):
@@ -12,72 +12,91 @@ class User(Resource):
         data = request.get_json() or {}
         user = UserModel()
 
-        if data['username'] == "" or data['name'] == "":
-            message = 'Check your name and usename'
+        if data['username'] == "":
+            message = 'Check your usename'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
+
+        if data['name'] == "":
+            message = 'Enter your name'
+            payload = {"Status": "Failed", "Message": message}
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
+            
     
         if data["email"].find("@") < 2:
             message = 'Incorrect email format'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer           
 
     
-        if data['password'] == "" or data['password'] != data["retype_password"]:
-            message = 'Check your password.'
+        if data['password'] == "":
+            message = 'Enter your password.'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
+
+        if data['password'] != data["retype_password"]:
+            message = 'Passwords do not match.'
+            payload = {"Status": "Failed", "Message": message}
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
+            
 
     
-        if data['role'] != "Admin" and data["role"] != "User":
+        if data['role'] != "Admin"and data["role"] != "User":
             message = 'Role input can either be Admin or User'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
+            
 
     
         if data['phone'] == "":
             message = 'Enter a valid number.'
             payload = {"Status": "Failed", "Message": message}
-            answ = make_response(jsonify(payload), 400)
-            return answ
+            answer = make_response(jsonify(payload),400)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
+            
 
-        #password = bcrypt.hashpw(data["password"], bcrypt.gensalt())
-        reply_info = user.create_user(data["username"], data["name"],
-         data["email"], data["role"], data["phone"], data["password"])
+        
+        reply_info = user.create_user(data)
 
         if reply_info:
-            user_data = {
-                "username": data["username"],
-                "name": data["name"],
-                "Email": data["email"],
-                "Role": data["role"],
-                "phone": data["phone"]
-                }
-
             payload = {"Status": "User Registered",
-            "User": user_data}
-            answ = make_response(jsonify(payload), 200)
-            return answ
+            "User": reply_info}
+            answer = make_response(jsonify(payload),200)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
+            
 
         payload = {"Status": "Failed", "Message": reply_info}
-        answ = make_response(jsonify(payload), 400)
-        return answ
+        answer = make_response(jsonify(payload),400)
+        answer.content_type='application/json;charset=utf-8'
+        return answer
+        
 
     def get(self):
         """Method to get all the parcels."""
-        user1 = UserModel()
-        all_users = user1.get_all()
+        user = UserModel()
+        all_users = user.get_all()
 
         payload = {
             "Status": "Ok",
             "Users": all_users
         }
-        answ = make_response(jsonify(payload), 200)
-        return answ
+        answer = make_response(jsonify(payload),200)
+        answer.content_type='application/json;charset=utf-8'
+        return answer
 
 
 class SingleUser(Resource):
@@ -92,9 +111,11 @@ class SingleUser(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            answ = make_response(jsonify(reply), 200)
-            return answ
+            answer = make_response(jsonify(reply),200)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
+            
         else:
             pack = {"Status": "User does not exist!"}
-            answ = make_response(jsonify(pack), 404)
-            return answ
+            return make_response(jsonify(pack), 404)
+            
