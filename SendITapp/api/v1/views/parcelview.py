@@ -123,7 +123,9 @@ class SingleParcel(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            return make_response(jsonify(reply), 200)
+            answer = make_response(jsonify(reply),200)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
         else:
             pack = {"Status": "Not Found!!", "id": parcelid}
             return make_response(jsonify(pack), 404)
@@ -141,7 +143,9 @@ class ParcelsByUser(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            return make_response(jsonify(reply), 200)
+            answer = make_response(jsonify(reply),200)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
             
         else:

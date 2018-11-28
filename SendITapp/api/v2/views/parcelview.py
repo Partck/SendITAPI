@@ -267,10 +267,3 @@ class UpdateDestinationOrder(Resource):
         if query_result:
             return query_result
         return "No parcel found!"
-
-
-
-
-        answer = make_response(jsonify(payload),400)
-        answer.content_type='application/json;charset=utf-8'
-        return answer

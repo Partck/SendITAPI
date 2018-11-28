@@ -111,7 +111,9 @@ class SingleUser(Resource):
 
         if reply_message:
             reply = {"Status": "OK", "reply_message": reply_message}
-            return make_response(jsonify(reply), 200)
+            answer = make_response(jsonify(reply),200)
+            answer.content_type='application/json;charset=utf-8'
+            return answer
             
         else:
             pack = {"Status": "User does not exist!"}

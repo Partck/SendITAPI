@@ -51,7 +51,7 @@ class TestUserViews(unittest.TestCase):
     def test_create_user_with_correct_mail(self):
         """ Test create a new parcel order. """
         response = self.app.post('/api/v1/users', data=json.dumps(self.data),
-        content_type='application/json')
+        content_type='application/json;charset=utf-8')
         result = json.loads(response.data)
         self.assertIn('User Registered', str(result))
         self.assertEqual(response.status_code, 200, msg="OK")
@@ -59,7 +59,7 @@ class TestUserViews(unittest.TestCase):
     def test_create_user_with_empty_username(self):
         """ Test create a new parcel order. """
         response1 = self.app.post('/api/v1/users',
-        data=json.dumps(self.data1), content_type='application/json')
+        data=json.dumps(self.data1), content_type='application/json;charset=utf-8')
         result = json.loads(response1.data)
         self.assertIn('Check your usename', str(result))
         self.assertEqual(response1.status_code, 400, msg="BAD REQUEST")
@@ -67,7 +67,7 @@ class TestUserViews(unittest.TestCase):
     def test_create_user_with_empty_name(self):
         """ Test create a new parcel order. """
         response2 = self.app.post('/api/v1/users',
-        data=json.dumps(self.data2), content_type='application/json')
+        data=json.dumps(self.data2), content_type='application/json;charset=utf-8')
         result = json.loads(response2.data)
         self.assertIn('Enter your name', str(result))
         self.assertEqual(response2.status_code, 400, msg="BAD REQUEST")
@@ -75,7 +75,7 @@ class TestUserViews(unittest.TestCase):
     def test_create_user_with_incorrect_email(self):
         """ Test create a new parcel order. """
         response3 = self.app.post('/api/v1/users',
-        data=json.dumps(self.data3), content_type='application/json')
+        data=json.dumps(self.data3), content_type='application/json;charset=utf-8')
         result = json.loads(response3.data)
         self.assertIn('Incorrect email format', str(result))
         self.assertEqual(response3.status_code, 400, msg="BAD REQUEST")
@@ -83,7 +83,7 @@ class TestUserViews(unittest.TestCase):
     def test_create_user_with_incorrect_role(self):
         """ Test create a new parcel order. """
         response4 = self.app.post('/api/v1/users',
-         data=json.dumps(self.data4),content_type='application/json')
+         data=json.dumps(self.data4),content_type='application/json;charset=utf-8')
         result = json.loads(response4.data)
         self.assertIn('Role input can either be Admin or User', str(result))
         self.assertEqual(response4.status_code, 400, msg="BAD REQUEST")
@@ -98,7 +98,7 @@ class TestUserViews(unittest.TestCase):
     def test_get_single_user(self):
         """This function tests for getting one user."""
         response = self.app.post('/api/v1/users', data=json.dumps(self.data),
-        content_type='application/json')
+        content_type='application/json;charset=utf-8')
         result = json.loads(response.data)
         # print(result["User"]["username"])
         
