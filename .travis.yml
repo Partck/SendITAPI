@@ -12,7 +12,6 @@ install:
 before_script:
  - export PYTHONPATH=`pwd`
 
-
 # command to run tests
 script: 
  - pytest --cov=SendITapp
