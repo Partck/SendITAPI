@@ -16,7 +16,7 @@ class TestUserViews(unittest.TestCase):
         self.app = create_app(config_class=config["test"]).test_client()
         self.data = {
                     "username": "pato",
-                    "name": "Pit Pat", "email": "patf@mail.com", "role": "Admin",
+                    "name": "PitPat", "email": "patf@mail.com", "role": "Admin",
                     "phone": "0733304050", "password": "qwerty", "retype_password": "qwerty"
                     }
         #Data containing empty name         
@@ -40,7 +40,7 @@ class TestUserViews(unittest.TestCase):
         #Dataset containing an incorrect role            
         self.data4 = {
                     "username": "pato",
-                    "name": "Pit Pat", "email": "pat@mail.com", "role": "admin",
+                    "name": "Pit Pat", "email": "pat@mail.com", "role": "ardmin",
                     "phone": "0712304050", "password": "qwerty", "retype_password": "qwerty"
                     }
             #login data sample
@@ -49,22 +49,6 @@ class TestUserViews(unittest.TestCase):
                 "password": "qwerty"
                 }
 
-
-    def test_create_user_with_empty_username(self):
-        """ Test create a new parcel order. """
-        response1 = self.app.post('/api/v2/register',
-        data=json.dumps(self.data1), content_type='application/json;charset=utf-8')
-        result = json.loads(response1.data)
-        self.assertIn('Check your username', str(result))
-        self.assertEqual(response1.status_code, 400, msg="BAD REQUEST")
-
-    def test_create_user_with_empty_name(self):
-        """ Test create a new parcel order. """
-        response2 = self.app.post('/api/v2/register',
-        data=json.dumps(self.data2), content_type='application/json;charset=utf-8')
-        result = json.loads(response2.data)
-        self.assertIn('Enter your name', str(result))
-        self.assertEqual(response2.status_code, 400, msg="BAD REQUEST")
 
     def test_create_user_with_incorrect_name(self):
         """ Test create a new parcel order. """
