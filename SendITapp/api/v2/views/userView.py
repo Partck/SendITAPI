@@ -6,8 +6,6 @@ from flask_restful import Resource
 from SendITapp.api.v2.models.users import UserModel
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
 
-
-
 class Register(Resource):
     """Handle user CRUD."""
 
@@ -22,20 +20,6 @@ class Register(Resource):
         username = data["username"].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", username)):
             message = 'Incorrect username.'
-            payload = {"Status": "Failed", "Message": message}
-            answer = make_response(jsonify(payload),400)
-            answer.content_type='application/json;charset=utf-8'
-            return answer
-
-        if data['username'] == "":
-            message = 'Check your username'
-            payload = {"Status": "Failed", "Message": message}
-            answer = make_response(jsonify(payload),400)
-            answer.content_type='application/json;charset=utf-8'
-            return answer
-
-        if data['name'] == "":
-            message = 'Enter your name'
             payload = {"Status": "Failed", "Message": message}
             answer = make_response(jsonify(payload),400)
             answer.content_type='application/json;charset=utf-8'
@@ -56,13 +40,6 @@ class Register(Resource):
             answer.content_type='application/json;charset=utf-8'
             return answer
                 
-        if data['password'] == "":
-            message = 'Enter your password.'
-            payload = {"Status": "Failed", "Message": message}
-            answer = make_response(jsonify(payload),400)
-            answer.content_type='application/json;charset=utf-8'
-            return answer
-        
         password = data["password"].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", password)):
             message = 'Check your password.'
@@ -71,7 +48,7 @@ class Register(Resource):
             answer.content_type='application/json;charset=utf-8'
             return answer
         
-        retype_password = data["password"].strip()
+        retype_password = data["retype_password"].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", retype_password)):
             message = 'Check your password(s).'
             payload = {"Status": "Failed", "Message": message}
@@ -153,24 +130,13 @@ class Login(Resource):
         data = request.get_json() or {}
         if not data:
             return "Please fill in all the fields"
-        if data["email"] == "":
-            message = 'Enter email'
-            payload = {"Status": "Failed", "Message": message}
-            answer = make_response(jsonify(payload),400)
-            answer.content_type='application/json;charset=utf-8'
-            return answer
         if data["email"].find("@") < 2:
             message = 'Incorrect email format'
             payload = {"Status": "Failed", "Message": message}
             answer = make_response(jsonify(payload),400)
             answer.content_type='application/json;charset=utf-8'
             return answer
-        if data["password"] == "":
-            message = 'Enter your password.'
-            payload = {"Status": "Failed", "Message": message}
-            answer = make_response(jsonify(payload),400)
-            answer.content_type='application/json;charset=utf-8'
-            return answer
+        
         password = data['password'].strip()
         if not (re.match("^[a-zA-Z0-9_]*$", password)):
             message = 'Check your password.'
